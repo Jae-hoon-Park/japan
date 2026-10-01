@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>삿포로에서 오호츠크해로</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Shippori+Mincho+B1:wght@600;800&display=swap">
+<style>
+/* Layout: a sea-chart hero (Sapporo → Okhotsk coast), then four ways to get there compared as door-to-door time bars, a 1-night course, ticketing per mode, and what to see by town. */
+:root{
+  --paper:#f2f5f7; --card:#ffffff; --ink:#142030; --ink-soft:#4b586a; --line:#d6dee6;
+  --sea:#1d4e6e;   /* Okhotsk deep water */
+  --ice:#5aa7c7;   /* drift-ice blue */
+  --momiji:#b8432c; --ginkgo:#c8941a; --chip:#e6edf2;
+  --f-display:"Gowun Batang","Shippori Mincho B1",serif;
+  --f-jp:"Shippori Mincho B1","Gowun Batang",serif;
+  --f-body:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:10px; color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0d1520;--card:#142030;--ink:#e6edf4;--ink-soft:#a3b1c2;--line:#26364a;
+  --sea:#7fb6d8;--ice:#8fd0ea;--momiji:#e0715a;--ginkgo:#e3b443;--chip:#1d2c40;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0d1520;--card:#142030;--ink:#e6edf4;--ink-soft:#a3b1c2;--line:#26364a;
+  --sea:#7fb6d8;--ice:#8fd0ea;--momiji:#e0715a;--ginkgo:#e3b443;--chip:#1d2c40;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65}
+img{max-width:100%}[hidden]{display:none!important}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:28px 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.25}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--ice);outline-offset:2px;border-radius:4px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea)}
+.muted{color:var(--ink-soft)}
+.small{font-size:12.5px;color:var(--ink-soft)}
+
+/* GNB */
+.gnb{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#18213a;color:#f4f6f8}
+.gnb-in{max-width:1120px;margin:0 auto;padding-inline:20px;height:56px;display:flex;align-items:center;gap:14px}
+.gnb-brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:inherit;flex:none}
+.gnb-brand .jp{font-family:var(--f-jp);font-weight:800;font-size:17px;letter-spacing:.08em}
+.gnb-brand .ko{font-size:13px;opacity:.75}
+.gnb-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.gnb-links::-webkit-scrollbar{display:none}
+.gnb-links a{flex:none;font-size:13.5px;text-decoration:none;color:inherit;opacity:.82;padding:7px 10px;border-radius:6px}
+.gnb-links a:hover{opacity:1;background:rgba(127,127,127,.18)}
+.gnb-links a[aria-current="page"]{opacity:1;font-weight:600;box-shadow:inset 0 -2px 0 #5aa7c7}
+.gnb-cta{flex:none;display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-weight:600;font-size:13.5px;padding:8px 14px;border-radius:999px;background:#3a8fc4;color:#fff}
+.gnb-cta .jp{font-family:var(--f-jp);font-weight:800;letter-spacing:.06em}
+.gnb-cta.eat{background:#b8432c}
+@media (max-width:760px){.gnb-brand .ko,.gnb-cta .long{display:none}.gnb-in{gap:8px;padding-inline:16px}.gnb-cta{padding:7px 11px}}
+@media (max-width:480px){.gnb-brand{display:none}}
+
+/* hero */
+.crumb{font-size:13px;color:var(--ink-soft);margin-bottom:14px}
+.crumb a{text-decoration:none;border-bottom:1px solid var(--line)}
+.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.hero-top{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;padding:24px 26px}
+.hero h1{font-size:clamp(30px,4.6vw,48px)}
+.hero h1 .jp{display:block;font-family:var(--f-jp);font-size:.42em;letter-spacing:.3em;color:var(--ink-soft);margin-bottom:10px}
+.hero p{margin:14px 0 0;color:var(--ink-soft);max-width:54ch}
+.chart{position:relative;min-height:220px;border-radius:10px;background:
+  repeating-linear-gradient(0deg,transparent 0 27px,color-mix(in srgb,var(--sea) 10%,transparent) 27px 28px),
+  repeating-linear-gradient(90deg,transparent 0 27px,color-mix(in srgb,var(--sea) 10%,transparent) 27px 28px),
+  color-mix(in srgb,var(--ice) 10%,var(--card));border:1px solid var(--line);overflow:hidden}
+.chart svg{position:absolute;inset:0;width:100%;height:100%}
+.chart .lbl{position:absolute;font-size:12px;font-weight:600;white-space:nowrap}
+.chart .lbl small{display:block;font-family:var(--f-mono);font-weight:400;font-size:10.5px;color:var(--ink-soft)}
+.chart .sea{position:absolute;right:12px;top:10px;font-family:var(--f-jp);font-weight:800;letter-spacing:.3em;color:var(--sea);font-size:15px}
+.hero-line{height:10px;background:linear-gradient(90deg,var(--sea),var(--ice))}
+.hero-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 26px;font-size:13px;color:var(--ink-soft)}
+.hero-foot b{color:var(--ink);font-weight:500}
+
+.toc{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.toc a{font-size:13px;text-decoration:none;border:1px solid var(--line);background:var(--card);padding:6px 12px;border-radius:999px}
+.toc a:hover{border-color:var(--ice)}
+
+section.block{margin-block:48px;scroll-margin-top:72px}
+.block-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.block-head h2{font-size:clamp(24px,3vw,30px)}
+
+/* honest note */
+.note{display:grid;grid-template-columns:auto 1fr;gap:16px;background:color-mix(in srgb,var(--ice) 12%,var(--card));border:1px solid color-mix(in srgb,var(--ice) 40%,var(--line));border-radius:var(--r);padding:16px 18px;margin-top:20px}
+.note .k{font-family:var(--f-jp);font-weight:800;font-size:28px;color:var(--sea);line-height:1}
+.note b{display:block;font-size:16px;margin-bottom:2px}
+.note p{margin:0;font-size:14px;color:var(--ink-soft)}
+.cando{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.cando div{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;min-width:0}
+.cando b{display:block;font-size:14px}
+.cando span{font-size:12.5px;color:var(--ink-soft)}
+.cando .ok{font-family:var(--f-mono);font-size:11px;color:var(--sea)}
+.cando .no{font-family:var(--f-mono);font-size:11px;color:var(--momiji)}
+
+/* time bars */
+.modes{display:grid;gap:12px}
+.mode{display:grid;grid-template-columns:200px 1fr;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 18px;align-items:center}
+.mode.rec{border-color:var(--sea);box-shadow:0 0 0 1px var(--sea)}
+.mode h3{font-size:17px}
+.mode .tag{display:inline-block;font-family:var(--f-mono);font-size:10.5px;padding:1px 8px;border-radius:999px;background:var(--chip);margin-bottom:4px}
+.mode.rec .tag{background:var(--sea);color:var(--card)}
+.mode .yen{font-family:var(--f-mono);font-size:13px;color:var(--ink-soft)}
+.tbar{display:flex;height:22px;border-radius:5px;overflow:hidden;background:var(--chip)}
+.tbar span{display:block;height:100%;font-family:var(--f-mono);font-size:10.5px;color:#fff;display:flex;align-items:center;padding-left:6px;white-space:nowrap;overflow:hidden}
+.tbar .ride{background:var(--sea)}
+.tbar .wait{background:var(--ice)}
+.tbar .walk{background:var(--ginkgo);color:#1c1606}
+.tmeta{display:flex;justify-content:space-between;gap:10px;margin-top:6px;font-size:12.5px;color:var(--ink-soft);flex-wrap:wrap}
+.tmeta b{font-family:var(--f-mono);color:var(--ink);font-weight:500}
+.axis{display:grid;grid-template-columns:200px 1fr;gap:16px;padding-inline:18px;font-family:var(--f-mono);font-size:11px;color:var(--ink-soft)}
+.axis div{display:flex;justify-content:space-between}
+.keys{display:flex;gap:14px;font-size:12px;color:var(--ink-soft);flex-wrap:wrap}
+.keys i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:5px;vertical-align:0}
+
+/* table */
+.tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:860px;font-size:13.5px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:500;background:var(--chip)}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td b{font-weight:600}
+tr:last-child td{border-bottom:0}
+
+/* course */
+.days{display:grid;gap:14px}
+.day{display:grid;grid-template-columns:120px 1fr;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.day-d{padding:16px;border-right:1px solid var(--line);background:var(--chip);font-family:var(--f-mono);font-size:12.5px}
+.day-d b{display:block;font-size:22px;font-weight:500}
+.day-d .theme{display:block;margin-top:8px;font-family:var(--f-body);font-size:13px;font-weight:600;color:var(--ink)}
+.day-b{padding:14px 18px;min-width:0}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.tl li{display:grid;grid-template-columns:62px 1fr;gap:12px}
+.tl time{font-family:var(--f-mono);font-size:13px;color:var(--ink-soft);padding-top:1px}
+.tl b{font-weight:600}
+.tl span{display:block;font-size:13px;color:var(--ink-soft)}
+.tl .mv b::before{content:"移";font-family:var(--f-jp);font-size:11px;background:var(--sea);color:var(--card);border-radius:4px;padding:0 4px;margin-right:6px;vertical-align:1px}
+.tl .eat b::before{content:"食";font-family:var(--f-jp);font-size:11px;background:var(--momiji);color:var(--card);border-radius:4px;padding:0 4px;margin-right:6px;vertical-align:1px}
+.fit{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+.fit div{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.fit b{display:block;margin-bottom:4px}
+.fit p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+
+/* ticketing */
+.how{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;min-width:0}
+.card h3{font-size:18px;margin-bottom:8px}
+.card ol,.card ul{margin:0;padding-left:20px;display:grid;gap:5px;font-size:14px}
+.card .tag{display:inline-block;font-family:var(--f-mono);font-size:11px;padding:1px 8px;border-radius:999px;background:var(--chip);margin-bottom:8px}
+
+/* towns */
+.towns{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.town{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;min-width:0}
+.town-h{display:flex;align-items:baseline;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.town-h .k{font-family:var(--f-jp);font-weight:800;font-size:26px;letter-spacing:.1em}
+.town-h h3{font-size:18px}
+.town-h span{font-family:var(--f-mono);font-size:12px;color:var(--ink-soft);margin-left:auto}
+.town ul{list-style:none;margin:0;padding:12px 18px 14px;display:grid;gap:8px}
+.town li b{font-weight:600}
+.town li a{text-decoration:none;border-bottom:1px solid var(--line)}
+.town li a:hover{border-color:var(--ice)}
+.town li p{margin:1px 0 0;font-size:13px;color:var(--ink-soft)}
+.st{font-family:var(--f-mono);font-size:10.5px;padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:1px;background:var(--chip)}
+.st.ok{background:var(--sea);color:var(--card)}
+.st.no{background:var(--momiji);color:var(--card)}
+
+.warn{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.warn div{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.warn b{display:block;margin-bottom:2px}
+.warn p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+
+@media (max-width:900px){
+  .hero-top{grid-template-columns:1fr}
+  .cando{grid-template-columns:1fr 1fr}
+  .how,.fit{grid-template-columns:1fr}
+  .warn{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .wrap{padding-inline:16px}
+  .hero-top{padding:20px 18px}
+  .hero-foot{padding:10px 18px}
+  .towns,.cando{grid-template-columns:1fr}
+  .mode{grid-template-columns:1fr;gap:10px}
+  .axis{grid-template-columns:1fr;padding-inline:0}
+  .axis > span{display:none}
+  .day{grid-template-columns:1fr}
+  .day-d{border-right:0;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+  .day-d .theme{margin-top:0}
+  .tl li{grid-template-columns:52px 1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="gnb" id="top">
+  <div class="gnb-in">
+    <a class="gnb-brand" href="index.html"><span class="jp">晩秋の日本</span><span class="ko">일본 여행 노트</span></a>
+    <nav class="gnb-links" aria-label="주요 메뉴"><a href="index.html">전체 지역</a><a href="sapporo.html">삿포로 코스</a><a href="okhotsk.html" aria-current="page">오호츠크해</a><a href="#ways">가는 방법</a><a href="#course">1박 2일 코스</a><a href="#ticket">표 사는 법</a></nav>
+    <a class="gnb-cta eat" href="foodie.html"><span class="jp">食</span>식도락<span class="long"> 비교</span></a>
+    <a class="gnb-cta" href="sapporo.html"><span class="jp">札幌</span>삿포로<span class="long"> 가이드</span></a>
+  </div>
+</header>
+
+<div class="wrap">
+<div class="crumb"><a href="sapporo.html">삿포로 가이드</a> › 오호츠크해 다녀오기</div>
+
+<header class="hero">
+  <div class="hero-top">
+    <div>
+      <div class="eyebrow">Side trip from Sapporo</div>
+      <h1><span class="jp">オホーツク海へ</span>삿포로에서<br>오호츠크해 보러 가기</h1>
+      <p>오호츠크해는 홋카이도 북동쪽 바다입니다. 삿포로에서 가장 가까운 해안 도시 아바시리까지 기차로 5시간이 넘게 걸리니, 당일치기보다 1박 2일로 다녀오는 것을 권합니다. 비행기·특급열차·고속버스·렌터카 네 가지 방법을 시간과 요금으로 비교했습니다.</p>
+    </div>
+    <div class="chart" role="img" aria-label="삿포로에서 아바시리까지의 위치 관계 약도">
+      <span class="sea">オホーツク海</span>
+      <svg viewBox="0 0 400 230" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M70 175 C 120 150, 150 120, 200 105 S 300 70, 345 62" fill="none" stroke="var(--sea)" stroke-width="3" stroke-dasharray="7 6"/>
+        <path d="M70 175 C 140 165, 250 110, 345 62" fill="none" stroke="var(--ice)" stroke-width="2"/>
+        <path d="M215 30 C 260 45, 300 40, 400 20 L 400 0 L 215 0 Z" fill="color-mix(in srgb, var(--sea) 18%, transparent)"/>
+        <circle cx="70" cy="175" r="8" fill="var(--sea)"/>
+        <circle cx="200" cy="105" r="5" fill="var(--card)" stroke="var(--sea)" stroke-width="3"/>
+        <circle cx="262" cy="52" r="5" fill="var(--card)" stroke="var(--sea)" stroke-width="3"/>
+        <circle cx="345" cy="62" r="8" fill="var(--sea)"/>
+      </svg>
+      <span class="lbl" style="left:8%;top:80%">札幌 삿포로<small>출발</small></span>
+      <span class="lbl" style="left:44%;top:49%">旭川 아사히카와<small>환승·경유</small></span>
+      <span class="lbl" style="left:55%;top:8%">紋別 몬베츠</span>
+      <span class="lbl" style="left:74%;top:34%">網走 아바시리<small>약 330km</small></span>
+    </div>
+  </div>
+  <div class="hero-line"></div>
+  <div class="hero-foot"><span>점선 <b>특급 오호츠크</b> (아사히카와 경유) · 실선 <b>비행기</b> (메만베츠 공항)</span><span>일몰 약 <b>15:45</b> · 낮 기온 <b>0~5℃</b></span></div>
+</header>
+<nav class="toc" aria-label="목차"><a href="#season">11월에 볼 수 있는 것</a><a href="#ways">가는 방법 비교</a><a href="#detail">교통편 상세</a><a href="#course">1박 2일 코스</a><a href="#ticket">표 사는 법</a><a href="#towns">해안 도시별 볼거리</a><a href="#caution">주의할 점</a></nav>
+
+<section class="block" id="season" style="margin-top:28px">
+  <div class="note">
+    <span class="k">流氷</span>
+    <div><b>11월 하순에는 유빙(流氷)이 없습니다</b>
+    <p>오호츠크해 유빙은 보통 1월 하순부터 3월까지 해안에 닿습니다. 11월에는 짙은 남색의 겨울 바다, 첫눈 덮인 해안, 그리고 유빙관에서 진짜 유빙을 만져보는 체험을 즐길 수 있습니다. 시레토코 쪽 관광선과 고개 도로는 이미 겨울 휴업에 들어간 시기라 아바시리 중심으로 계획하세요.</p></div>
+  </div>
+  <div class="cando">
+    <div><span class="ok">● 가능</span><b>오호츠크 유빙관</b><span>영하 15℃ 방에서 실제 유빙 만지기, 덴토산 전망대에서 바다 조망</span></div>
+    <div><span class="ok">● 가능</span><b>아바시리 감옥 박물관</b><span>메이지 시대 감옥 건물을 옮겨 놓은 야외 박물관, 연중 운영</span></div>
+    <div><span class="ok">● 가능</span><b>제철 해산물</b><span>가리비, 킨키(홍살치), 연어알, 몬베츠 털게</span></div>
+    <div><span class="no">● 어려움</span><b>유빙 쇄빙선 · 시레토코 관광선</b><span>유빙선은 1~3월, 시레토코 관광선은 보통 10월에 시즌 종료</span></div>
+  </div>
+</section>
+
+<section class="block" id="ways">
+  <div class="block-head">
+    <div><div class="eyebrow">Four ways</div><h2>가는 방법 비교 · 삿포로 → 아바시리</h2></div>
+    <div class="keys"><span><i style="background:var(--sea)"></i>탑승</span><span><i style="background:var(--ice)"></i>공항 수속·대기</span><span><i style="background:var(--ginkgo)"></i>환승·이동</span></div>
+  </div>
+  <div class="modes" id="modes"></div>
+  <p class="small" style="margin-top:8px">시간은 삿포로 시내 출발부터 아바시리 시내 도착까지의 대략적인 문 앞→문 앞 시간, 요금은 성인 1인 편도 대략치입니다.</p>
+</section>
+
+<section class="block" id="detail">
+  <div class="block-head">
+    <div><div class="eyebrow">Details</div><h2>교통편 상세</h2></div>
+    <span class="muted" style="font-size:13px">편수가 적은 노선이 많으니 출발 전 시간표 확인 필수</span>
+  </div>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>방법</th><th>노선</th><th>소요</th><th>편수</th><th>예상 요금 (편도)</th><th>예약처</th></tr></thead>
+      <tbody>
+        <tr><td><b>비행기</b></td><td>신치토세 → 메만베츠 공항<br><span class="small">공항 → 아바시리 시내는 연계 버스 약 35분</span></td><td class="n">비행 약 50분</td><td>하루 몇 편 (ANA·JAL 계열)</td><td class="n">약 1만~2만 5천 엔<br><span class="small">일찍 예약할수록 저렴 · 버스 약 1,000엔</span></td><td>ANA·JAL 홈페이지, 항공권 예약 앱</td></tr>
+        <tr><td><b>특급열차</b></td><td>삿포로 → 아바시리 특급 '오호츠크'<br><span class="small">아사히카와에서 특급 '다이세츠'로 갈아타는 방법도 있음</span></td><td class="n">약 5시간 20분</td><td>직통 하루 2왕복 정도</td><td class="n">약 1만~1만 1천 엔<br><span class="small">지정석 기준</span></td><td>JR홋카이도 열차 예약 사이트, 역 발권기</td></tr>
+        <tr><td><b>고속버스</b></td><td>삿포로 → 아바시리 '드림 오호츠크호'<br><span class="small">주간편·야간편</span></td><td class="n">약 6시간</td><td>하루 몇 편</td><td class="n">약 6,000~7,000엔</td><td>홋카이도 주오버스 등 운행사 예약 사이트</td></tr>
+        <tr><td><b>렌터카</b></td><td>도오 자동차도 → 아사히카와·몬베츠 자동차도 → 국도</td><td class="n">약 4시간 30분~5시간</td><td>자유</td><td class="n">대여 하루 약 8,000~12,000엔<br><span class="small">+ 고속도로·기름값</span></td><td>렌터카 예약 사이트 (겨울 타이어 포함 확인)</td></tr>
+        <tr><td><b>참고: 왓카나이</b></td><td>삿포로 → 왓카나이 특급 '소야' · 신치토세 → 왓카나이 비행기</td><td class="n">열차 약 5시간 10분<br>비행 약 55분</td><td>직통 열차 하루 몇 편</td><td class="n">열차 약 1만~1만 1천 엔</td><td>JR홋카이도 · 항공사</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="course">
+  <div class="block-head">
+    <div><div class="eyebrow">Recommended</div><h2>추천 1박 2일 · 가는 날은 비행기, 오는 날은 기차</h2></div>
+    <span class="muted" style="font-size:13px">해가 짧아 첫날 오전에 도착하는 비행기가 핵심</span>
+  </div>
+  <div class="days">
+    <article class="day">
+      <div class="day-d"><b>DAY 1</b>SUN 11/22<span class="theme">아바시리</span></div>
+      <div class="day-b"><ul class="tl">
+        <li><time>07:30</time><div class="mv"><b>삿포로역 → 신치토세 공항</b><span>JR 쾌속 37분 · 국내선 터미널로</span></div></li>
+        <li><time>09:00</time><div class="mv"><b>신치토세 → 메만베츠 공항</b><span>약 50분 비행 · 오전 편으로 예약</span></div></li>
+        <li><time>10:30</time><div class="mv"><b>공항 연계 버스로 아바시리 시내</b><span>약 35분 · 짐은 호텔이나 역 코인 로커에</span></div></li>
+        <li><time>11:30</time><div><b>오호츠크 유빙관 (덴토산)</b><span>유빙 체험실과 옥상 전망대에서 오호츠크해와 시레토코 연봉 조망</span></div></li>
+        <li><time>12:30</time><div class="eat"><b>점심 · 오호츠크 해산물 덮밥</b><span>가리비, 연어알 · 시내 식당이나 '미치노에키 유빙가도 아바시리'</span></div></li>
+        <li><time>13:30</time><div><b>아바시리 감옥 박물관</b><span>2시간 정도 · 겨울에는 실내 전시 위주로</span></div></li>
+        <li><time>15:30</time><div><b>해 질 녘 바다 산책</b><span>미치노에키 앞 해안 · 일몰 약 15:45</span></div></li>
+        <li><time>18:00</time><div class="eat"><b>저녁 · 킨키(홍살치) 구이와 지역 술</b><span>아바시리 시내 이자카야 · 숙박은 아바시리 온천(아바시리호 주변)</span></div></li>
+      </ul></div>
+    </article>
+    <article class="day">
+      <div class="day-d"><b>DAY 2</b>MON 11/23<span class="theme">기차로 삿포로 복귀</span></div>
+      <div class="day-b"><ul class="tl">
+        <li><time>07:00</time><div><b>아바시리 호수·바다 아침 산책</b><span>날씨가 맑으면 호수 너머로 오호츠크해</span></div></li>
+        <li><time>08:00</time><div class="mv"><b>아바시리역 → 특급 '오호츠크'</b><span>약 5시간 20분 · 차창으로 설원과 다이세츠산</span></div></li>
+        <li><time>13:30</time><div class="mv"><b>삿포로 도착</b><span>열차 시간이 맞지 않으면 아사히카와에서 특급 '카무이'로 환승</span></div></li>
+        <li><time>저녁</time><div class="eat"><b>모이와산 야경 · 삿포로 라멘</b><span>원래 삿포로 일정으로 복귀</span></div></li>
+      </ul></div>
+    </article>
+  </div>
+  <div class="fit">
+    <div><b>삿포로 4박 5일 일정에 끼우려면</b><p><a href="sapporo.html#plan">삿포로 코스</a>의 3일차(온천)와 4일차 오전을 오호츠크 1박 2일로 바꾸면 됩니다. 오타루와 시내 관광은 1·2일차에 그대로 둡니다.</p></div>
+    <div><b>당일치기가 꼭 하고 싶다면</b><p>비행기 왕복만 가능합니다. 오전 편으로 가서 유빙관과 해안만 보고 오후 편으로 돌아오는 일정이라 빠듯하고 항공료가 두 배로 듭니다.</p></div>
+  </div>
+</section>
+
+<section class="block" id="ticket">
+  <div class="block-head"><div><div class="eyebrow">Ticketing</div><h2>표 사는 법</h2></div></div>
+  <div class="how">
+    <div class="card">
+      <span class="tag">비행기</span>
+      <h3>국내선 항공권</h3>
+      <ol>
+        <li>ANA 또는 JAL 홈페이지(한국어 지원)에서 출발지 '신치토세(CTS)', 도착지 '메만베츠(MMB)'를 넣고 검색합니다.</li>
+        <li>외국인 전용 할인 운임이 있는지 함께 확인합니다. 일찍 살수록 저렴합니다.</li>
+        <li>당일 공항에서 여권과 예약번호로 체크인합니다. 국내선은 출발 30분 전까지 보안검사를 마치면 됩니다.</li>
+        <li>메만베츠 공항에서 아바시리행 연계 버스는 도착편에 맞춰 출발하니, 내리자마자 탑승합니다.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <span class="tag">특급열차</span>
+      <h3>JR 특급 '오호츠크'</h3>
+      <ol>
+        <li>JR홋카이도 열차 예약 사이트에서 '札幌 → 網走'를 검색해 지정석을 예약합니다.</li>
+        <li>직통이 하루 2왕복 정도라 원하는 시간이 없으면 아사히카와 환승(카무이 + 다이세츠)으로 찾습니다.</li>
+        <li>역의 지정석 발권기에 QR코드나 예약번호를 넣어 표를 받습니다.</li>
+        <li>왕복할 계획이면 <b>홋카이도 레일패스</b>(5일 약 2만 엔대)를 비교하세요. 아바시리 왕복만 약 2만 엔이라, 공항·오타루까지 쓰면 패스가 이득입니다.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <span class="tag">고속버스</span>
+      <h3>드림 오호츠크호</h3>
+      <ul>
+        <li>운행사 예약 사이트에서 사전 예약하고, 승차할 때 요금을 내거나 미리 결제합니다.</li>
+        <li>삿포로역 앞 버스터미널에서 출발합니다. 야간편을 타면 숙박비를 아낄 수 있지만 피로가 큽니다.</li>
+        <li>눈이 많이 오면 지연·운휴될 수 있으니 귀국 전날에는 피하세요.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">렌터카</span>
+      <h3>겨울 운전은 신중하게</h3>
+      <ul>
+        <li>한국에서 발급한 <b>국제운전면허증</b>과 한국 면허증, 여권이 모두 필요합니다.</li>
+        <li>11월 하순 홋카이도 렌터카는 보통 겨울 타이어가 기본이지만 예약할 때 꼭 확인하세요.</li>
+        <li>해가 지면 노면이 얼어붙습니다. 눈길 운전 경험이 없다면 기차나 비행기를 권합니다.</li>
+        <li>고속도로 요금은 ETC 카드를 함께 빌리면 편합니다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="towns">
+  <div class="block-head">
+    <div><div class="eyebrow">Okhotsk coast</div><h2>해안 도시별 볼거리 · 11월 기준</h2></div>
+    <span class="muted" style="font-size:13px">이름을 누르면 구글 이미지 검색</span>
+  </div>
+  <div class="towns" id="towns-list"></div>
+</section>
+
+<section class="block" id="caution">
+  <div class="block-head"><div><div class="eyebrow">Before you go</div><h2>주의할 점</h2></div></div>
+  <div class="warn">
+    <div><b>해가 아주 짧습니다</b><p>오후 3시 반이면 어둑해집니다. 야외 일정은 오전부터 시작하세요.</p></div>
+    <div><b>결항·운휴 대비</b><p>눈보라가 치면 비행기와 열차가 멈출 수 있습니다. 귀국 전날에는 삿포로로 돌아와 있는 일정이 안전합니다.</p></div>
+    <div><b>삿포로보다 춥습니다</b><p>바닷바람 때문에 체감온도는 영하입니다. 장갑과 귀마개, 미끄럼 방지 신발을 챙기세요.</p></div>
+    <div><b>열차 편수가 적습니다</b><p>직통 특급이 하루 몇 편뿐이라 한 대를 놓치면 일정이 크게 밀립니다.</p></div>
+    <div><b>영업일 확인</b><p>겨울철에는 쉬는 관광시설과 식당이 많습니다. 방문 전 휴관일을 확인하세요.</p></div>
+    <div><b>3연휴 혼잡</b><p>11/21~23 연휴라 국내선 항공권과 아바시리 숙소가 빨리 찹니다.</p></div>
+  </div>
+</section>
+
+<footer>소요 시간·요금·운행 편수·시설 운영 여부는 작성 시점(2026-10-01) 기준 대략치입니다. 항공사, JR홋카이도, 버스 운행사, 각 시설의 공식 정보를 반드시 확인하세요. <a href="sapporo.html">← 삿포로 가이드로 돌아가기</a></footer>
+</div>
+
+<script>
+const G = q => "https://www.google.com/search?tbm=isch&q=" + encodeURIComponent(q);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* door-to-door segments in minutes: [type, minutes, label] */
+const MODES = [
+ {n:"비행기",tag:"가장 빠름 · 추천",rec:1,yen:"약 1만~2만 5천 엔",note:"오전 편이면 첫날 오후를 통째로 쓸 수 있음",seg:[["walk",45,"공항까지"],["wait",60,"수속"],["ride",50,"비행"],["walk",45,"버스"]]},
+ {n:"특급열차",tag:"갈아타기 없음",yen:"약 1만~1만 1천 엔",note:"설원 차창이 볼거리. 돌아오는 길에 추천",seg:[["walk",15,""],["ride",320,"특급 오호츠크 5시간 20분"]]},
+ {n:"고속버스",tag:"가장 저렴",yen:"약 6,000~7,000엔",note:"야간편으로 숙박 1박 절약 가능",seg:[["walk",15,""],["ride",360,"드림 오호츠크호 약 6시간"]]},
+ {n:"렌터카",tag:"자유롭지만 눈길 주의",yen:"하루 약 8,000엔~ + 기름·톨비",note:"눈길 운전 경험이 있을 때만",seg:[["walk",20,"대여"],["ride",285,"운전 약 4시간 45분"]]}
+];
+const MAX = 6.5*60;
+const fmt = m => `${Math.floor(m/60)}시간 ${m%60?m%60+"분":""}`.trim();
+document.getElementById("modes").innerHTML = MODES.map(m=>{
+  const tot = m.seg.reduce((a,s)=>a+s[1],0);
+  return `<div class="mode${m.rec?" rec":""}"><div><span class="tag">${m.tag}</span><h3>${m.n}</h3><span class="yen">${m.yen}</span></div>
+  <div><div class="tbar" role="img" aria-label="${m.n} 총 ${fmt(tot)}" style="width:${tot/MAX*100}%">${m.seg.map(([t,v,l])=>`<span class="${t}" style="width:${v/tot*100}%" title="${esc(l)} ${v}분">${esc(l)}</span>`).join("")}</div>
+  <div class="tmeta"><span>${esc(m.note)}</span><span>총 <b>${fmt(tot)}</b></span></div></div></div>`;
+}).join("");
+
+const TOWNS = [
+ {k:"網走",n:"아바시리",d:"삿포로에서 가장 가는 길이 많은 오호츠크 거점",items:[
+  ["오호츠크 유빙관","オホーツク流氷館","ok","영하 15℃ 체험실의 진짜 유빙, 클리오네(바다천사) 전시, 옥상 전망대"],
+  ["아바시리 감옥 박물관","博物館網走監獄","ok","메이지 시대 감옥 건축물 야외 박물관. 감옥식 체험 식당"],
+  ["홋카이도립 북방민족박물관","北海道立北方民族博物館","ok","오호츠크 문화와 북방 민족 전시"],
+  ["유빙 관광 쇄빙선 오로라","流氷観光砕氷船おーろら","no","유빙 시즌(1~3월) 운항. 11월엔 운항 여부 확인"]]},
+ {k:"紋別",n:"몬베츠",d:"털게와 바다 밑 전망탑의 도시",items:[
+  ["오호츠크 타워","オホーツクタワー","ok","바다 위 방파제 끝에 선 해저 전망탑, 수중 관찰실"],
+  ["가린코호 II","ガリンコ号II","no","유빙 쇄빙선. 유빙 시즌 외 운항은 확인 필요"],
+  ["털게·가리비","紋別 毛ガニ","ok","게 집게 모양 거대 조형물이 있는 게의 도시"]]},
+ {k:"知床",n:"시레토코 (우토로)",d:"세계자연유산. 11월은 겨울 휴업기",items:[
+  ["오신코신 폭포","オシンコシンの滝","ok","도로변에서 바로 보이는 폭포. 차로 들르기 좋음"],
+  ["시레토코 5호","知床五湖","no","11월 하순은 폐쇄되거나 접근이 제한되는 시기"],
+  ["시레토코 관광선","知床 観光船","no","보통 10월에 시즌 종료"]]},
+ {k:"稚内",n:"왓카나이",d:"일본 최북단. 소야 해협 너머로 사할린",items:[
+  ["소야곶","宗谷岬","ok","일본 최북단 기념비. 맑으면 사할린이 보임"],
+  ["북방파제 돔","北防波堤ドーム","ok","고대 로마 건축 같은 방파제 회랑"],
+  ["왓카나이 공원","稚内公園","ok","시내와 바다를 내려다보는 언덕 공원"]]}
+];
+document.getElementById("towns-list").innerHTML = TOWNS.map(t=>`<article class="town"><div class="town-h"><span class="k">${t.k}</span><h3>${t.n}</h3><span>${esc(t.d)}</span></div>
+ <ul>${t.items.map(([n,jp,s,d])=>`<li><a href="${G(jp)}" target="_blank" rel="noopener"><b>${esc(n)}</b></a><span class="st ${s}">${s==="ok"?"11월 가능":"확인 필요"}</span><p>${esc(d)}</p></li>`).join("")}</ul></article>`).join("");
+</script>
+</body>
+</html>
