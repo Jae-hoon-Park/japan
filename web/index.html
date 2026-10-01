@@ -183,6 +183,11 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-si
 .coll{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
 .coll .x-body .rg{font-family:var(--f-mono);font-size:11px;color:var(--ink-soft);letter-spacing:.06em}
 
+.credits{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 18px}
+.credits summary{cursor:pointer;font-weight:600}
+.credits ol{columns:2;column-gap:28px;font-size:12px;color:var(--ink-soft);padding-left:20px;margin:8px 0 0}
+.credits li{break-inside:avoid;margin-bottom:3px}
+@media (max-width:600px){.credits ol{columns:1}}
 @media (max-width:900px){
   .coll{grid-template-columns:1fr 1fr}
   .hero{grid-template-columns:1fr}
@@ -210,7 +215,7 @@ html{scroll-behavior:smooth}
   <div>
     <div class="eyebrow">Travel report · 2026 autumn</div>
     <h1><span class="jp">晩秋の日本</span>11월 하순, 일본 18개 도시<br>맛집과 단풍 노트</h1>
-    <p>11월 20일 금요일에 오전 비행기로 떠나 24일 화요일 오후에 돌아오는 4박 5일 일정입니다. 지역마다 대표 음식 3가지와 그 음식으로 가장 유명한 가게, 꼭 가야 할 곳, 이 기간에 열리는 축제를 정리했습니다. 사진 칸을 누르면 구글 이미지 검색으로 실사 사진을 볼 수 있습니다.</p>
+    <p>11월 20일 금요일에 오전 비행기로 떠나 24일 화요일 오후에 돌아오는 4박 5일 일정입니다. 지역마다 대표 음식 3가지와 그 음식으로 가장 유명한 가게, 꼭 가야 할 곳, 이 기간에 열리는 축제를 정리했습니다. 사진을 누르면 구글 이미지 검색으로 더 많은 사진을 볼 수 있습니다.</p>
   </div>
   <div class="pass" aria-label="여행 일정 요약">
     <div class="pass-main">
@@ -307,12 +312,17 @@ html{scroll-behavior:smooth}
   </div>
 </section>
 
-<footer>가게 영업 여부, 항공 스케줄, 축제 일정은 작성일(2026-10-01) 기준 일반 정보입니다. 출발 전에 공식 채널에서 다시 확인하세요. 사진 링크는 구글 이미지 검색 결과로 연결됩니다.</footer>
+<section class="block" id="credits">
+  <details class="credits"><summary>사진 출처 (위키미디어 커먼즈) · <span id="credCount"></span></summary>
+  <p class="muted" style="font-size:12.5px">사진은 해당 음식이나 장소의 대표 예시이며, 소개한 가게에서 찍은 사진이 아닐 수 있습니다. 각 사진은 표시된 라이선스(CC 등)에 따라 사용했습니다.</p>
+  <ol id="credList"></ol></details>
+</section>
+<footer>가게 영업 여부, 항공 스케줄, 축제 일정은 작성일(2026-10-01) 기준 일반 정보입니다. 출발 전에 공식 채널에서 다시 확인하세요. 사진을 누르면 구글 이미지 검색으로 더 많은 실사 사진을 볼 수 있습니다.</footer>
 </div>
 
 <script>
-/* set true once real photos are published under img/<region>-<n>.jpg */
-const HAS_PHOTOS = false;
+/* photos from Wikimedia Commons: key -> [artist, license, commons page] (filled by build) */
+const PHOTOS = {};
 const G = q => "https://www.google.com/search?tbm=isch&q=" + encodeURIComponent(q);
 const M = q => "https://www.google.com/maps/search/" + encodeURIComponent(q);
 
@@ -559,7 +569,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 function photo(f, i, r){
   const q = f.sjp + " " + f.djp;
   return `<a class="photo" href="${G(q)}" target="_blank" rel="noopener" style="background:linear-gradient(140deg,${f.c[0]},${f.c[1]})" aria-label="${esc(f.s)} ${esc(f.d)} 실사 사진 보기 (구글 이미지)">
-    ${HAS_PHOTOS?`<img src="img/${r.id}-${i+1}.jpg" alt="${esc(f.d)} · ${esc(f.s)}" loading="lazy">`:""}
+    ${PHOTOS[`${r.id}-${i+1}`]?`<img src="img/${r.id}-${i+1}.jpg" alt="${esc(f.d)} · ${esc(f.s)}" loading="lazy">`:""}
     <span class="rank">No.${i+1}</span>
     <span class="ph">${esc(f.djp)}</span>
     <span class="g">실사 사진 보기 ↗</span></a>`;
@@ -569,7 +579,7 @@ function photo(f, i, r){
 function thumb(x, key){
   const [tag,shop,sjp,dish,djp] = x, c = tone(sjp);
   return `<a class="thumb" href="${G(sjp+" "+dish.split("·")[0])}" target="_blank" rel="noopener" style="background:linear-gradient(140deg,${c[0]},${c[1]})" aria-label="${esc(shop)} ${esc(dish)} 실사 사진 보기">
-    ${HAS_PHOTOS?`<img src="img/${key}.jpg" alt="" loading="lazy">`:""}<span class="ph" style="font-size:${djp.length>5?11:djp.length>3?13:15}px">${esc(djp)}</span></a>`;
+    ${PHOTOS[key]?`<img src="img/${key}.jpg" alt="${esc(dish)}" loading="lazy">`:""}<span class="ph" style="font-size:${djp.length>5?11:djp.length>3?13:15}px">${esc(djp)}</span></a>`;
 }
 function xItem(x, key, regionName){
   const [tag,shop,sjp,dish,djp,area,yr,note] = x;
@@ -618,6 +628,14 @@ function showColl(i){
 }
 ctabs.addEventListener("click",e=>{const b=e.target.closest(".chip"); if(b) showColl(+b.dataset.i);});
 showColl(0);
+
+
+/* photo credits */
+const LBL = {};
+R.forEach(r=>{r.foods.forEach((f,i)=>LBL[`${r.id}-${i+1}`]=`${r.ko} · ${f.d}`);(EX[r.id]||[]).forEach((x,i)=>LBL[`${r.id}-x${i+1}`]=`${r.ko} · ${x[1]}`);});
+const ck = Object.keys(PHOTOS).filter(k=>LBL[k]);
+document.getElementById("credCount").textContent = ck.length + "장";
+document.getElementById("credList").innerHTML = ck.map(k=>{const [a,l,u]=PHOTOS[k]; return `<li>${esc(LBL[k])} · <a href="${u}" target="_blank" rel="noopener">${esc(a||"작자 미상")}</a> · ${esc(l)}</li>`}).join("");
 
 /* region filter */
 const groups = ["전체", ...new Set(R.map(r=>r.grp))];
