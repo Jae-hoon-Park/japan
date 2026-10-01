@@ -184,7 +184,7 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-si
 
 /* ---------- GNB ---------- */
 .gnb{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--ink);color:var(--paper)}
-.gnb-in{max-width:1120px;margin:0 auto;padding-inline:20px;height:56px;display:flex;align-items:center;gap:18px}
+.gnb-in{max-width:1120px;margin:0 auto;padding-inline:20px;height:56px;display:flex;align-items:center;gap:14px}
 .gnb-brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:inherit;flex:none}
 .gnb-brand .jp{font-family:var(--f-jp);font-weight:800;font-size:17px;letter-spacing:.08em}
 .gnb-brand .ko{font-size:13px;opacity:.75}
@@ -196,11 +196,13 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-si
 .gnb-cta{flex:none;display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:13.5px;padding:8px 14px;border-radius:999px;background:#3a8fc4;color:#fff;box-shadow:0 0 0 3px rgba(58,143,196,.25)}
 .gnb-cta .jp{font-family:var(--f-jp);font-weight:800;letter-spacing:.06em}
 .gnb-cta:hover{background:#2f7fb8}
+.gnb-cta.eat{background:#b8432c;box-shadow:0 0 0 3px rgba(184,67,44,.25)}
+.gnb-cta.eat:hover{background:#a23a25}
 .gnb-cta[aria-current="page"]{background:var(--paper);color:var(--ink);box-shadow:none}
 .gnb-cta .new{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;background:#fff;color:#2f7fb8;border-radius:4px;padding:1px 5px}
 .gnb-cta[aria-current="page"] .new{display:none}
-@media (max-width:760px){.gnb-brand .ko{display:none}.gnb-in{gap:10px;padding-inline:16px}.gnb-cta{padding:7px 11px}.gnb-cta .new{display:none}}
-@media (max-width:440px){.gnb-brand{display:none}}
+@media (max-width:760px){.gnb-brand .ko,.gnb-cta .long{display:none}.gnb-in{gap:10px;padding-inline:16px}.gnb-cta{padding:7px 11px}.gnb-cta .new{display:none}}
+@media (max-width:480px){.gnb-brand{display:none}}
 </style>
 </head>
 <body>
@@ -208,7 +210,8 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-si
   <div class="gnb-in">
     <a class="gnb-brand" href="index.html"><span class="jp">晩秋の日本</span><span class="ko">일본 여행 노트</span></a>
     <nav class="gnb-links" aria-label="주요 메뉴"><a href="index.html">전체 지역</a><a href="#plan">삿포로 코스</a><a href="#transport">교통·요금</a><a href="#ticket">표 사는 법</a><a href="#food">먹거리</a><a href="#budget">예산</a></nav>
-    <a class="gnb-cta" href="sapporo.html" aria-current="page"><span class="jp">札幌</span>삿포로 가이드<span class="new">NEW</span></a>
+    <a class="gnb-cta eat" href="foodie.html"><span class="jp">食</span>식도락<span class="long"> 비교</span></a>
+    <a class="gnb-cta" href="sapporo.html" aria-current="page"><span class="jp">札幌</span>삿포로<span class="long"> 가이드</span><span class="new">NEW</span></a>
   </div>
 </header>
 <div class="wrap">

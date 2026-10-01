@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>식도락 여행지 비교</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Shippori+Mincho+B1:wght@600;800&display=swap">
+<style>
+/* Layout: weight controls on the left feed a live ranking on the right; below, a score matrix and one card per city with a five-meal day route. */
+:root{
+  --paper:#f5f4f2; --card:#ffffff; --ink:#1d1a24; --ink-soft:#57525f; --line:#e0dcd8;
+  --shoyu:#8a3b1e;   /* soy-sauce brown, the page accent */
+  --momiji:#b8432c; --snow:#2f7fb8; --sign:#1f6f5c; --ginkgo:#c8941a; --chip:#eeeae6;
+  --heat0:#f3eee9; --heat5:#8a3b1e;
+  --f-display:"Gowun Batang","Shippori Mincho B1",serif;
+  --f-jp:"Shippori Mincho B1","Gowun Batang",serif;
+  --f-body:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:10px; color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#141218;--card:#1d1a22;--ink:#ece8ef;--ink-soft:#aaa3b2;--line:#332e3a;
+  --shoyu:#e08a5e;--momiji:#e0715a;--snow:#6fb3e3;--sign:#4fb89c;--ginkgo:#e3b443;--chip:#2a2630;
+  --heat0:#24202a;--heat5:#e08a5e;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#141218;--card:#1d1a22;--ink:#ece8ef;--ink-soft:#aaa3b2;--line:#332e3a;
+  --shoyu:#e08a5e;--momiji:#e0715a;--snow:#6fb3e3;--sign:#4fb89c;--ginkgo:#e3b443;--chip:#2a2630;
+  --heat0:#24202a;--heat5:#e08a5e;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65}
+img{max-width:100%}[hidden]{display:none!important}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:28px 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.25}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--shoyu);outline-offset:2px;border-radius:4px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--shoyu)}
+.muted{color:var(--ink-soft)}
+.small{font-size:12.5px;color:var(--ink-soft)}
+
+/* GNB (shared look) */
+.gnb{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#18213a;color:#f4f6f8}
+.gnb-in{max-width:1120px;margin:0 auto;padding-inline:20px;height:56px;display:flex;align-items:center;gap:14px}
+.gnb-brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:inherit;flex:none}
+.gnb-brand .jp{font-family:var(--f-jp);font-weight:800;font-size:17px;letter-spacing:.08em}
+.gnb-brand .ko{font-size:13px;opacity:.75}
+.gnb-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.gnb-links::-webkit-scrollbar{display:none}
+.gnb-links a{flex:none;font-size:13.5px;text-decoration:none;color:inherit;opacity:.82;padding:7px 10px;border-radius:6px}
+.gnb-links a:hover{opacity:1;background:rgba(127,127,127,.18)}
+.gnb-cta{flex:none;display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-weight:600;font-size:13.5px;padding:8px 14px;border-radius:999px;background:#3a8fc4;color:#fff}
+.gnb-cta .jp{font-family:var(--f-jp);font-weight:800;letter-spacing:.06em}
+.gnb-cta.eat{background:#b8432c}
+.gnb-cta[aria-current="page"]{background:#f4f6f8;color:#18213a}
+@media (max-width:760px){.gnb-brand .ko,.gnb-cta .long{display:none}.gnb-in{gap:8px;padding-inline:16px}.gnb-cta{padding:7px 11px}}
+@media (max-width:480px){.gnb-brand{display:none}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:end;padding-block:8px 28px;border-bottom:1px solid var(--line)}
+.hero h1{font-size:clamp(32px,5vw,52px)}
+.hero h1 .jp{display:block;font-family:var(--f-jp);font-size:.4em;color:var(--ink-soft);letter-spacing:.3em;margin-bottom:10px}
+.hero p{margin:14px 0 0;color:var(--ink-soft);max-width:56ch}
+.verdicts{display:grid;gap:8px}
+.vd{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.vd b{font-size:13px;color:var(--ink-soft);font-weight:500}
+.vd span{font-weight:600}
+.vd a{text-decoration:none;border-bottom:1px solid var(--line)}
+
+section.block{margin-block:44px;scroll-margin-top:72px}
+.block-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.block-head h2{font-size:clamp(24px,3vw,30px)}
+
+/* ranker */
+.ranker{display:grid;grid-template-columns:340px 1fr;gap:16px;align-items:start}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
+.panel h3{font-size:17px;margin-bottom:4px}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 16px}
+.chip{font:500 12.5px var(--f-body);border:1px solid var(--line);background:var(--card);color:var(--ink);padding:5px 11px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--shoyu);border-color:var(--shoyu);color:var(--card)}
+.w{display:grid;grid-template-columns:1fr auto;gap:2px 10px;margin-bottom:12px}
+.w label{font-size:14px;font-weight:600}
+.w output{font-family:var(--f-mono);font-size:12px;color:var(--ink-soft);align-self:center}
+.w small{grid-column:1/-1;font-size:12px;color:var(--ink-soft)}
+.w input{grid-column:1/-1;width:100%;accent-color:var(--shoyu)}
+.rank{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.rank li{display:grid;grid-template-columns:34px 130px 1fr 56px;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;transition:transform .25s}
+.rank li.top{border-color:var(--shoyu);box-shadow:0 0 0 1px var(--shoyu)}
+.rank .pos{font-family:var(--f-mono);font-size:18px;color:var(--ink-soft)}
+.rank li.top .pos{color:var(--shoyu)}
+.rank .nm{min-width:0}
+.rank .nm b{display:block;font-size:15px}
+.rank .nm span{font-family:var(--f-jp);font-size:12px;color:var(--ink-soft)}
+.rank .track{display:block;height:10px;border-radius:5px;background:var(--chip);overflow:hidden}
+.rank .fill{display:block;height:100%;background:var(--shoyu);border-radius:5px;transition:width .3s}
+.rank .sc{font-family:var(--f-mono);font-size:14px;text-align:right;font-variant-numeric:tabular-nums}
+.rank .why{grid-column:2/-1;font-size:12.5px;color:var(--ink-soft);margin-top:-4px}
+.rank a{text-decoration:none}
+
+/* matrix */
+.mx-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:860px;font-size:13.5px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:center}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-soft);font-weight:500;background:var(--chip)}
+th:first-child,td:first-child{text-align:left}
+td.h{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:500}
+td.money{font-family:var(--f-mono);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.legend{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft)}
+.legend i{display:inline-block;width:18px;height:12px;border-radius:3px}
+
+/* city cards */
+.cities{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.city{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.city-h{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
+.city-h .k{font-family:var(--f-jp);font-weight:800;font-size:30px;letter-spacing:.1em;line-height:1}
+.city-h h3{font-size:19px}
+.city-h p{margin:0;font-size:13px;color:var(--ink-soft)}
+.city-h .bud{text-align:right;font-family:var(--f-mono);font-size:11.5px;color:var(--ink-soft)}
+.city-h .bud b{display:block;font-size:16px;color:var(--ink);font-weight:500}
+.season{display:flex;flex-wrap:wrap;gap:6px;padding:12px 18px 0}
+.season span{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--chip)}
+.season span.jp{font-family:var(--f-jp)}
+.season .lbl{background:transparent;padding-left:0;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--shoyu)}
+.meals{list-style:none;margin:0;padding:12px 18px 6px;display:grid;gap:8px}
+.meals li{display:grid;grid-template-columns:54px 1fr;gap:10px}
+.meals .t{font-family:var(--f-mono);font-size:12px;color:var(--shoyu);padding-top:2px}
+.meals b{font-weight:600}
+.meals a{text-decoration:none;border-bottom:1px solid var(--line)}
+.meals a:hover{border-color:var(--shoyu)}
+.meals span{font-size:12.5px;color:var(--ink-soft);margin-left:6px}
+.city-f{margin-top:auto;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);font-size:13px}
+.city-f .for{color:var(--ink-soft)}
+.city-f a{font-weight:600;text-decoration:none;color:var(--shoyu)}
+
+/* combos */
+.combos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.combo{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:grid;gap:8px;align-content:start}
+.combo h3{font-size:18px}
+.combo .path{font-family:var(--f-mono);font-size:12.5px;color:var(--shoyu)}
+.combo p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+.combo ul{margin:0;padding-left:18px;font-size:13.5px;display:grid;gap:3px}
+
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.rule{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.rule b{display:block;margin-bottom:2px}
+.rule p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+
+@media (max-width:960px){
+  .ranker{grid-template-columns:1fr}
+  .hero{grid-template-columns:1fr}
+  .combos{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .wrap{padding-inline:16px}
+  .cities,.combos,.rules{grid-template-columns:1fr}
+  .rank li{grid-template-columns:28px 1fr 48px}
+  .rank .track{grid-column:2/-1;grid-row:2}
+  .rank .why{grid-column:1/-1;margin-top:0}
+  .vd{grid-template-columns:1fr;gap:0}
+  .city-h{grid-template-columns:auto 1fr}
+  .city-h .bud{grid-column:1/-1;text-align:left}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="gnb" id="top">
+  <div class="gnb-in">
+    <a class="gnb-brand" href="index.html"><span class="jp">晩秋の日本</span><span class="ko">일본 여행 노트</span></a>
+    <nav class="gnb-links" aria-label="주요 메뉴"><a href="index.html">전체 지역</a><a href="#ranker">맞춤 순위</a><a href="#matrix">비교표</a><a href="#cities">도시별 먹방 코스</a><a href="#combos">조합 추천</a></nav>
+    <a class="gnb-cta eat" href="foodie.html" aria-current="page"><span class="jp">食</span>식도락<span class="long"> 비교</span></a>
+    <a class="gnb-cta" href="sapporo.html"><span class="jp">札幌</span>삿포로<span class="long"> 가이드</span></a>
+  </div>
+</header>
+
+<div class="wrap">
+<header class="hero">
+  <div>
+    <div class="eyebrow">Food trip · 11.20 – 11.24</div>
+    <h1><span class="jp">食べ比べ</span>먹으러 간다면,<br>어디로 가야 할까</h1>
+    <p>11월 하순 4박 5일을 먹는 데 쓴다고 정하고 9개 도시를 비교했습니다. 제철 재료, 음식 다양성, 포장마차와 노포, 가성비, 한국에서 가는 편의성까지 7가지 기준으로 점수를 매겼습니다. 중요하게 생각하는 기준을 고르면 순위가 바로 바뀝니다.</p>
+  </div>
+  <div class="verdicts" aria-label="한 줄 결론">
+    <div class="vd"><b>처음 가는 먹방</b><span><a href="#c-osaka">오사카</a> · 싸고 많고 가깝다</span></div>
+    <div class="vd"><b>포장마차 감성</b><span><a href="#c-fukuoka">후쿠오카</a> · 강변 야타이와 라멘</span></div>
+    <div class="vd"><b>제철 해산물</b><span><a href="#c-kanazawa">가나자와</a> · <a href="#c-sapporo">삿포로</a> · 대게와 성게</span></div>
+    <div class="vd"><b>노포·고급 미식</b><span><a href="#c-kyoto">교토</a> · <a href="#c-tokyo">도쿄</a> · 수백 년 된 가게</span></div>
+  </div>
+</header>
+
+<section class="block" id="ranker">
+  <div class="block-head">
+    <div><div class="eyebrow">Your ranking</div><h2>나에게 맞는 식도락 도시</h2></div>
+    <span class="muted" style="font-size:13px">점수는 이 보고서의 주관적 평가(1~5점)입니다</span>
+  </div>
+  <div class="ranker">
+    <div class="panel">
+      <h3>무엇을 중요하게 보나요?</h3>
+      <p class="small" style="margin:0">빠른 선택을 누르거나 막대를 직접 움직여 보세요. 0이면 무시, 3이면 가장 중요.</p>
+      <div class="presets" id="presets" role="group" aria-label="빠른 선택"></div>
+      <div id="weights"></div>
+    </div>
+    <ol class="rank" id="rank" aria-live="polite"></ol>
+  </div>
+</section>
+
+<section class="block" id="matrix">
+  <div class="block-head">
+    <div><div class="eyebrow">Score matrix</div><h2>9개 도시 한눈에 비교</h2></div>
+    <div class="legend">1점 <i style="background:var(--heat0)"></i><i style="background:color-mix(in srgb,var(--heat5) 50%,var(--heat0))"></i><i style="background:var(--heat5)"></i> 5점</div>
+  </div>
+  <div class="mx-scroll"><table id="mx"></table></div>
+  <p class="small" style="margin-top:8px">하루 식비는 아침·점심·간식·저녁·야식 다섯 끼를 유명 가게 위주로 먹을 때의 1인 대략치입니다.</p>
+</section>
+
+<section class="block" id="cities">
+  <div class="block-head">
+    <div><div class="eyebrow">One day, five meals</div><h2>도시별 하루 먹방 코스</h2></div>
+    <span class="muted" style="font-size:13px">가게 이름을 누르면 구글맵</span>
+  </div>
+  <div class="cities" id="cityCards"></div>
+</section>
+
+<section class="block" id="combos">
+  <div class="block-head">
+    <div><div class="eyebrow">Two cities, one trip</div><h2>4박 5일 식도락 조합 추천</h2></div>
+    <span class="muted" style="font-size:13px">한 도시에 머물며 옆 도시를 하루 다녀오는 조합</span>
+  </div>
+  <div class="combos">
+    <div class="combo">
+      <span class="path">오사카 3박 ⇄ 교토 1일 · JR 신쾌속 29분</span>
+      <h3>간사이 먹방 정석</h3>
+      <p>오사카의 길거리 음식과 교토의 노포를 한 번에. 단풍철이라 교토는 아침 일찍 움직이세요.</p>
+      <ul><li>오사카: 타코야키, 쿠시카츠, 우라난바 이자카야</li><li>교토: 유도후, 니신소바, 니시키 시장</li><li>교통 예상: 왕복 약 1,200엔</li></ul>
+    </div>
+    <div class="combo">
+      <span class="path">후쿠오카 3박 ⇄ 나가사키 1일 · 신칸센 약 1시간 30분</span>
+      <h3>규슈 라멘·포장마차</h3>
+      <p>가장 짧은 비행, 공항에서 도심 5분. 밤마다 야타이, 하루는 짬뽕과 카스텔라의 도시로.</p>
+      <ul><li>후쿠오카: 돈코츠 라멘, 모츠나베, 멘타이코, 야타이</li><li>나가사키: 짬뽕, 카스텔라, 토루코 라이스</li><li>교통 예상: 왕복 약 1만 엔대 (특급+신칸센)</li></ul>
+    </div>
+    <div class="combo">
+      <span class="path">삿포로 3박 ⇄ 오타루 1일 · JR 쾌속 35분</span>
+      <h3>홋카이도 제철 해산물</h3>
+      <p>게, 성게, 연어알이 맛있어지는 시기. 라멘·징기스칸·스프카레까지 겨울 음식이 다 모여 있습니다.</p>
+      <ul><li>삿포로: 미소 라멘, 징기스칸, 스프카레, 니조 시장</li><li>오타루: 스시 거리, 르타오</li><li><a href="sapporo.html" style="color:var(--shoyu);font-weight:600;text-decoration:none">삿포로 집중 가이드 →</a></li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="rules">
+  <div class="block-head"><div><div class="eyebrow">Eat smart</div><h2>식도락 여행 요령</h2></div></div>
+  <div class="rules">
+    <div class="rule"><b>유명 가게는 오픈 시간에</b><p>점심 11시, 저녁 17시 오픈 직후가 가장 덜 기다립니다. 3연휴(11/21~23)는 30분 일찍 가세요.</p></div>
+    <div class="rule"><b>예약은 타베로그·구글맵</b><p>스시·게 요리·가이세키처럼 비싼 집은 예약이 기본입니다. 영어 예약이 되는 곳이 많습니다.</p></div>
+    <div class="rule"><b>한 끼는 작게, 여러 번</b><p>포장마차와 시장은 1인분이 작아 여러 곳을 돌기 좋습니다. 하루 다섯 끼를 목표로 잡아 보세요.</p></div>
+    <div class="rule"><b>현금 준비</b><p>노포·야타이·시장은 현금만 받는 곳이 아직 많습니다. 하루 1만 엔 정도는 지갑에 넣어 두세요.</p></div>
+    <div class="rule"><b>아침은 시장에서</b><p>니조 시장, 구로몬 시장, 오미초 시장, 하코다테 아침시장은 오전에 가야 신선하고 문도 열려 있습니다.</p></div>
+    <div class="rule"><b>야식 문화 즐기기</b><p>삿포로 시메 파르페, 후쿠오카 야타이 라멘처럼 술자리 뒤 마무리 음식이 도시마다 있습니다.</p></div>
+  </div>
+</section>
+
+<footer>점수와 식비는 작성 시점(2026-10-01) 기준 이 보고서의 주관적 평가와 대략치입니다. 가게 영업 여부는 방문 전 확인하세요. <a href="index.html">← 전체 일본 여행 노트</a></footer>
+</div>
+
+<script>
+const M = (q, c) => "https://www.google.com/maps/search/" + encodeURIComponent(q + " " + c);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const CRIT = [
+ ["season","11월 제철","이 시기에 특히 맛있는 재료가 있는가"],
+ ["variety","음식 다양성","명물 음식 종류가 얼마나 많은가"],
+ ["street","포장마차·골목","야타이, 요코초, 시장 길거리 음식"],
+ ["oldshop","노포","100년 넘은 가게를 얼마나 만날 수 있나"],
+ ["value","가성비","유명 가게도 부담 없는 가격인가"],
+ ["access","가는 편의성","비행시간, 공항에서 도심까지"],
+ ["walk","맛집 동선","걸어서 여러 곳을 돌 수 있나"]
+];
+
+/* id, name, jp, region anchor on main page, scores, daily food budget (yen), one-liner, season items, for whom, meals [slot, shop, jp, dish] */
+const C = [
+ {id:"osaka",ko:"오사카",jp:"大阪",s:{season:3,variety:5,street:5,oldshop:4,value:5,access:5,walk:5},bud:5000,
+  line:"먹다 망한다는 도시. 싸고, 많고, 가깝다",
+  sea:["게","복어(시즌 시작)","가을 밤"],for:"첫 일본 먹방, 친구와 왁자지껄",
+  meals:[["아침","구로몬 시장","黒門市場","해산물 꼬치·참치"],["점심","미즈노","美津の","야마이모야키"],["간식","와나카","わなか","타코야키"],["저녁","쿠시카츠 다루마","だるま 新世界","쿠시카츠"],["야식","우라난바 이자카야","裏なんば","하이볼 한 잔"]]},
+ {id:"fukuoka",ko:"후쿠오카",jp:"福岡",s:{season:4,variety:4,street:5,oldshop:3,value:5,access:5,walk:5},bud:5000,
+  line:"공항에서 도심 5분, 밤마다 강변 포장마차",
+  sea:["모츠나베 시즌","굴","복어"],for:"짧은 일정, 라멘 순례, 야타이",
+  meals:[["아침","간소 나가하마야","元祖長浜屋","나가하마 라멘"],["점심","간소 하카타 멘타이쥬","元祖博多めんたい重","멘타이쥬"],["간식","하카타역 길거리","博多駅","명란 바게트"],["저녁","모츠나베 오오야마","もつ鍋おおやま","모츠나베"],["야식","나카스 야타이","中洲屋台","야키라멘·오뎅"]]},
+ {id:"sapporo",ko:"삿포로",jp:"札幌",s:{season:5,variety:4,street:2,oldshop:3,value:3,access:4,walk:4},bud:7000,
+  line:"게·성게·연어알, 그리고 겨울 라멘",
+  sea:["털게·대게","연어알","가리비","굴(앗케시)"],for:"해산물 마니아, 첫눈 보며 라멘",
+  meals:[["아침","니조 시장","二条市場","카이센동"],["점심","스미레","すみれ 札幌本店","미소 라멘"],["간식","키노토야","きのとや","우유 소프트"],["저녁","다루마","だるま 本店","징기스칸"],["야식","파르페테리아 PaL","パフェテリア パル","시메 파르페"]]},
+ {id:"kyoto",ko:"교토",jp:"京都",s:{season:4,variety:3,street:3,oldshop:5,value:2,access:3,walk:3},bud:8000,
+  line:"천 년 떡집부터 미쉐린 요정까지, 노포의 수도",
+  sea:["교야사이(교토 채소)","유도후","송이 끝물"],for:"단풍과 노포, 조용한 미식",
+  meals:[["아침","효테이","瓢亭","반숙 달걀·아침죽"],["점심","소혼케 마츠바","総本家にしんそば松葉","니신소바"],["간식","니시키 시장","錦市場","두부 도넛·다시마키"],["저녁","오쿠탄","奥丹 南禅寺","유도후 코스"],["야식","폰토초","先斗町","교요리 한 접시"]]},
+ {id:"tokyo",ko:"도쿄",jp:"東京",s:{season:3,variety:5,street:3,oldshop:5,value:2,access:4,walk:3},bud:8000,
+  line:"없는 게 없는 도시, 에도 노포와 최신 라멘",
+  sea:["아귀 전골","방어","은행"],for:"스시·텐동·소바 노포 순례",
+  meals:[["아침","스시다이","寿司大 豊洲","오마카세 스시"],["점심","다이코쿠야","大黒家天麩羅","텐동"],["간식","간다 야부소바","かんだやぶそば","세이로 소바"],["저녁","츠키시마 몬자 거리","月島もんじゃストリート","몬자야키"],["야식","오모이데 요코초","思い出横丁","야키토리"]]},
+ {id:"kanazawa",ko:"가나자와",jp:"金沢",s:{season:5,variety:3,street:2,oldshop:4,value:3,access:2,walk:4},bud:8000,
+  line:"11월 6일 대게 해금. 이 시기 가장 화려한 바다",
+  sea:["대게(카노가니)","암게(코바코가니)","노도구로","방어"],for:"제철 해산물에 돈을 쓸 수 있는 사람",
+  meals:[["아침","오미초 시장","近江町市場","카이센동"],["점심","챔피언 카레","チャンピオンカレー","가나자와 카레"],["간식","하쿠이치","箔一 東山","금박 소프트"],["저녁","오토모로","大友楼","가가 요리"],["야식","아카다마","赤玉 本店","가나자와 오뎅"]]},
+ {id:"nagoya",ko:"나고야",jp:"名古屋",s:{season:2,variety:4,street:2,oldshop:3,value:4,access:3,walk:4},bud:5000,
+  line:"된장과 장어, 개성 강한 나고야메시",
+  sea:["장어(사계절)","미소 니코미"],for:"진한 맛을 좋아하는 사람",
+  meals:[["아침","코메다 커피","コメダ珈琲店","모닝 세트"],["점심","아츠타 호라이켄","あつた蓬莱軒","히츠마부시"],["간식","센주","千寿","텐무스"],["저녁","야바톤","矢場とん","미소카츠"],["야식","세카이노 야마짱","世界の山ちゃん","테바사키"]]},
+ {id:"hiroshima",ko:"히로시마",jp:"広島",s:{season:5,variety:3,street:2,oldshop:3,value:4,access:3,walk:4},bud:5000,
+  line:"굴 제철 시작, 겹겹이 굽는 오코노미야키",
+  sea:["굴","붕장어","단풍 만쥬"],for:"굴 좋아하는 사람, 미야지마 단풍",
+  meals:[["아침","우에노","うえの 宮島口","아나고메시"],["점심","카키야","牡蠣屋 宮島","굴 정식"],["간식","모미지도","紅葉堂","아게모미지"],["저녁","나가타야","長田屋","오코노미야키"],["야식","킹켄","キング軒","시루나시 탄탄멘"]]},
+ {id:"hakodate",ko:"하코다테",jp:"函館",s:{season:4,variety:3,street:3,oldshop:3,value:4,access:2,walk:5},bud:6000,
+  line:"아침시장 오징어와 야경, 작고 걷기 좋은 항구",
+  sea:["오징어(끝물)","연어알","털게"],for:"삿포로와 묶어 가는 사람",
+  meals:[["아침","키쿠요 식당","きくよ食堂","도모에동"],["점심","아지사이","函館麺厨房あじさい","시오 라멘"],["간식","럭키 피에로","ラッキーピエロ","차이니즈 치킨버거"],["저녁","고토켄","五島軒","양식 카레"],["야식","다이몬 요코초","大門横丁","포장마차촌"]]}
+];
+
+const PRESETS = [
+ ["균형",{season:2,variety:2,street:2,oldshop:2,value:2,access:2,walk:2}],
+ ["가성비 먹방",{season:1,variety:3,street:2,oldshop:0,value:3,access:2,walk:3}],
+ ["제철 해산물",{season:3,variety:1,street:0,oldshop:0,value:0,access:0,walk:0}],
+ ["노포 순례",{season:1,variety:1,street:0,oldshop:3,value:0,access:1,walk:2}],
+ ["포장마차·골목",{season:0,variety:2,street:3,oldshop:1,value:2,access:1,walk:3}],
+ ["짧고 편하게",{season:1,variety:2,street:1,oldshop:1,value:2,access:3,walk:3}]
+];
+
+let W = {...PRESETS[0][1]};
+try { const saved = JSON.parse(localStorage.getItem("foodie-w")||"null"); if (saved) W = {...W, ...saved}; } catch(e) {}
+
+const wEl = document.getElementById("weights");
+wEl.innerHTML = CRIT.map(([k,n,d])=>`<div class="w"><label for="w-${k}">${n}</label><output id="o-${k}">${W[k]}</output><input type="range" id="w-${k}" min="0" max="3" step="1" value="${W[k]}" data-k="${k}"><small>${d}</small></div>`).join("");
+const pEl = document.getElementById("presets");
+pEl.innerHTML = PRESETS.map(([n],i)=>`<button class="chip" id="p-${i}" data-i="${i}" aria-pressed="false">${n}</button>`).join("");
+
+function score(c){
+  const tw = CRIT.reduce((a,[k])=>a+W[k],0) || 1;
+  return CRIT.reduce((a,[k])=>a + c.s[k]*W[k], 0) / tw;   // weighted average, 1–5
+}
+function best(c){
+  return CRIT.filter(([k])=>W[k]>0).sort((a,b)=>c.s[b[0]]*W[b[0]]-c.s[a[0]]*W[a[0]]).slice(0,2).map(x=>x[1]).join(" · ");
+}
+function render(){
+  CRIT.forEach(([k])=>{ document.getElementById("o-"+k).textContent = W[k]; document.getElementById("w-"+k).value = W[k]; });
+  pEl.querySelectorAll(".chip").forEach(b=>{ const p = PRESETS[b.dataset.i][1]; b.setAttribute("aria-pressed", CRIT.every(([k])=>p[k]===W[k])); });
+  const list = C.map(c=>({c, v:score(c)})).sort((a,b)=>b.v-a.v);
+  document.getElementById("rank").innerHTML = list.map(({c,v},i)=>`<li class="${i===0?"top":""}">
+    <span class="pos">${i+1}</span>
+    <a class="nm" href="#c-${c.id}"><b>${c.ko}</b><span>${c.jp}</span></a>
+    <span class="track"><span class="fill" style="width:${(v/5*100).toFixed(1)}%"></span></span>
+    <span class="sc">${v.toFixed(2)}</span>
+    <span class="why">강점: ${esc(best(c)||"—")} · 하루 식비 약 ${c.bud.toLocaleString("ko-KR")}엔</span></li>`).join("");
+  try { localStorage.setItem("foodie-w", JSON.stringify(W)); } catch(e) {}
+}
+wEl.addEventListener("input", e=>{ const k = e.target.dataset.k; if (!k) return; W[k] = +e.target.value; render(); });
+pEl.addEventListener("click", e=>{ const b = e.target.closest(".chip"); if (!b) return; W = {...PRESETS[b.dataset.i][1]}; render(); });
+render();
+
+/* matrix */
+const heat = v => `color-mix(in srgb, var(--heat5) ${(v-1)/4*100}%, var(--heat0))`;
+const ink = v => v>=4 ? "var(--card)" : "var(--ink)";
+document.getElementById("mx").innerHTML =
+  `<thead><tr><th>도시</th>${CRIT.map(([,n])=>`<th>${n}</th>`).join("")}<th>하루 식비</th></tr></thead><tbody>` +
+  C.map(c=>`<tr><td><a href="#c-${c.id}" style="text-decoration:none"><b>${c.ko}</b> <span class="small" style="font-family:var(--f-jp)">${c.jp}</span></a></td>${CRIT.map(([k])=>`<td class="h" style="background:${heat(c.s[k])};color:${ink(c.s[k])}">${c.s[k]}</td>`).join("")}<td class="money">약 ${c.bud.toLocaleString("ko-KR")}엔</td></tr>`).join("") + "</tbody>";
+
+/* city cards */
+document.getElementById("cityCards").innerHTML = C.map(c=>`<article class="city" id="c-${c.id}">
+  <div class="city-h"><span class="k">${c.jp}</span><div><h3>${c.ko}</h3><p>${esc(c.line)}</p></div><div class="bud">하루 식비<b>약 ${c.bud.toLocaleString("ko-KR")}엔</b></div></div>
+  <div class="season"><span class="lbl">11월 제철</span>${c.sea.map(x=>`<span>${esc(x)}</span>`).join("")}</div>
+  <ul class="meals">${c.meals.map(([t,s,jp,d])=>`<li><span class="t">${t}</span><div><a href="${M(jp,c.jp)}" target="_blank" rel="noopener"><b>${esc(s)}</b></a><span>${esc(d)}</span></div></li>`).join("")}</ul>
+  <div class="city-f"><span class="for">이런 분께: ${esc(c.for)}</span><a href="${c.id==="sapporo"?"sapporo.html":"index.html#"+c.id}">${c.id==="sapporo"?"삿포로 집중 가이드 →":"지역 정보 더 보기 →"}</a></div>
+</article>`).join("");
+</script>
+</body>
+</html>
