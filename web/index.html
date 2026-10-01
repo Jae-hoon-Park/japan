@@ -63,7 +63,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--momiji);outline-off
 .fact.warn .tag{background:var(--momiji);color:var(--card)}
 
 /* ---------- calendar ---------- */
-section.block{margin-block:44px}
+section.block{margin-block:44px;scroll-margin-top:72px}
 .block-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
 .block-head h2{font-size:clamp(24px,3vw,30px)}
 .cal-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
@@ -79,14 +79,14 @@ section.block{margin-block:44px}
 .span2{grid-column:span 2}.span3{grid-column:span 3}.span5{grid-column:span 5}
 
 /* ---------- nav ---------- */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);padding-block:10px;margin-inline:-20px;padding-inline:20px;border-bottom:1px solid var(--line)}
+.nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 56px);z-index:5;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);padding-block:10px;margin-inline:-20px;padding-inline:20px;border-bottom:1px solid var(--line)}
 .chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:none;font:500 13px var(--f-body);border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 
 /* ---------- region ---------- */
-.region{margin-block:40px 56px;scroll-margin-top:70px}
+.region{margin-block:40px 56px;scroll-margin-top:126px}
 .sign{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .sign-top{display:grid;grid-template-columns:1fr auto;gap:16px;padding:18px 22px 12px;align-items:end}
 .sign-name{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;min-width:0}
@@ -202,8 +202,35 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-si
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 html{scroll-behavior:smooth}
+
+/* ---------- GNB ---------- */
+.gnb{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--ink);color:var(--paper)}
+.gnb-in{max-width:1120px;margin:0 auto;padding-inline:20px;height:56px;display:flex;align-items:center;gap:18px}
+.gnb-brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:inherit;flex:none}
+.gnb-brand .jp{font-family:var(--f-jp);font-weight:800;font-size:17px;letter-spacing:.08em}
+.gnb-brand .ko{font-size:13px;opacity:.75}
+.gnb-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.gnb-links::-webkit-scrollbar{display:none}
+.gnb-links a{flex:none;font-size:13.5px;text-decoration:none;color:inherit;opacity:.82;padding:7px 10px;border-radius:6px}
+.gnb-links a:hover{opacity:1;background:rgba(127,127,127,.18)}
+.gnb-links a[aria-current="page"]{opacity:1;font-weight:600}
+.gnb-cta{flex:none;display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:13.5px;padding:8px 14px;border-radius:999px;background:#3a8fc4;color:#fff;box-shadow:0 0 0 3px rgba(58,143,196,.25)}
+.gnb-cta .jp{font-family:var(--f-jp);font-weight:800;letter-spacing:.06em}
+.gnb-cta:hover{background:#2f7fb8}
+.gnb-cta[aria-current="page"]{background:var(--paper);color:var(--ink);box-shadow:none}
+.gnb-cta .new{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;background:#fff;color:#2f7fb8;border-radius:4px;padding:1px 5px}
+.gnb-cta[aria-current="page"] .new{display:none}
+@media (max-width:760px){.gnb-brand .ko{display:none}.gnb-in{gap:10px;padding-inline:16px}.gnb-cta{padding:7px 11px}.gnb-cta .new{display:none}}
+@media (max-width:440px){.gnb-brand{display:none}}
 </style>
 
+<header class="gnb" id="top">
+  <div class="gnb-in">
+    <a class="gnb-brand" href="index.html"><span class="jp">晩秋の日本</span><span class="ko">일본 여행 노트</span></a>
+    <nav class="gnb-links" aria-label="주요 메뉴"><a href="index.html#top" aria-current="page">전체 지역</a><a href="index.html#calendar">축제 달력</a><a href="index.html#collection">노포·포장마차</a><a href="index.html#flights">항공권</a><a href="index.html#plans">추천 일정</a></nav>
+    <a class="gnb-cta" href="sapporo.html"><span class="jp">札幌</span>삿포로 가이드<span class="new">NEW</span></a>
+  </div>
+</header>
 <div class="wrap">
 
 <header class="hero">
