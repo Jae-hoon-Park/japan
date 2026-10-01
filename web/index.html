@@ -156,7 +156,35 @@ tr:last-child td{border-bottom:0}
 .tip p{margin:0;font-size:13.5px;color:var(--ink-soft)}
 footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
 
+
+/* ---------- more food: thumbnail list ---------- */
+.more{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-top:16px}
+.more-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.more-head h4{margin:0;font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+.legend{display:flex;gap:6px;flex-wrap:wrap}
+.xlist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 18px}
+.x{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:start;min-width:0}
+.thumb{position:relative;width:76px;height:76px;border-radius:8px;overflow:hidden;display:grid;place-items:center;text-decoration:none;flex:none}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb .ph{font-family:var(--f-jp);font-weight:800;font-size:15px;line-height:1.15;color:rgba(255,255,255,.95);text-align:center;padding:0 4px;word-break:keep-all}
+.thumb::after{content:"↗";position:absolute;right:4px;bottom:2px;font-size:11px;color:rgba(255,255,255,.85)}
+.x-body{min-width:0}
+.x-body h5{margin:0;font-size:15px;font-family:var(--f-display);line-height:1.3}
+.x-body .sjp{font-family:var(--f-jp);font-size:12px;color:var(--ink-soft);margin-left:4px}
+.x-body .meta{font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+.x-body p{margin:3px 0 0;font-size:13px}
+.tg{display:inline-block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em;padding:1px 7px;border-radius:999px;margin-right:6px;vertical-align:1px;background:var(--chip);color:var(--ink)}
+.tg.t-old{background:var(--ink);color:var(--paper)}
+.tg.t-yatai{background:var(--momiji);color:var(--card)}
+.tg.t-alley{background:var(--ginkgo);color:#1c1606}
+.tg.t-market{background:var(--sign);color:#fff}
+.yr{font-family:var(--f-mono);font-size:11.5px;color:var(--momiji);margin-left:6px}
+/* collection */
+.coll{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.coll .x-body .rg{font-family:var(--f-mono);font-size:11px;color:var(--ink-soft);letter-spacing:.06em}
+
 @media (max-width:900px){
+  .coll{grid-template-columns:1fr 1fr}
   .hero{grid-template-columns:1fr}
   .facts{grid-template-columns:repeat(2,1fr)}
   .foods{grid-template-columns:1fr 1fr}
@@ -165,7 +193,7 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-si
 @media (max-width:600px){
   .wrap{padding-inline:16px}
   .nav{margin-inline:-16px;padding-inline:16px}
-  .foods,.facts,.tips{grid-template-columns:1fr}
+  .foods,.facts,.tips,.xlist,.coll{grid-template-columns:1fr}
   .pass{grid-template-columns:1fr}
   .pass-stub{border-left:0;border-top:2px dashed var(--line);grid-auto-flow:column;justify-content:space-around}
   .sign-top{grid-template-columns:1fr}
@@ -230,6 +258,14 @@ html{scroll-behavior:smooth}
       <div class="rh">일본 전역<small>공휴일</small></div><div></div><div class="span3"><div class="bar ink">3연휴 · 관광지 혼잡</div></div><div></div>
     </div>
   </div>
+</section>
+
+<section class="block" id="collection">
+  <div class="block-head">
+    <div><div class="eyebrow">Old shops · Yatai · Yokocho</div><h2>노포와 포장마차, 골목 모아보기</h2></div>
+    <div class="legend" id="collTabs" role="tablist"></div>
+  </div>
+  <div class="coll" id="coll"></div>
 </section>
 
 <nav class="nav" aria-label="지역 필터">
@@ -410,6 +446,96 @@ const R = [
   ev:[{n:"동남식물낙원 일루미네이션",w:"11월 중순~",s:"진행",p:"오키나와 최대급 조명"},{n:"해양 액티비티",w:"연중",s:"가능",p:"스노클링은 웻슈트 권장"}]}
 ];
 
+
+/* extra eats per region: [tag, shop, shopJp, dish, dishJp(thumb), area, year, note]
+   tags: 노포 · 포장마차 · 골목 · 시장 · 라멘 · 디저트 · 명물 */
+const EX = {
+ tokyo:[["노포","간다 야부소바","かんだやぶそば","소바","蕎麦","간다","1880","녹색 빛 메밀면과 노래하듯 주문을 외치는 소바 노포"],
+  ["노포","다이코쿠야 텐푸라","大黒家天麩羅","텐동","天丼","아사쿠사","1887","참기름에 튀겨 진한 소스를 끼얹은 에도식 텐동"],
+  ["노포","이세겐","いせ源","아귀 전골","あんこう鍋","간다","1830","도쿄에 하나뿐인 아귀 요리 전문점, 겨울 한정 메뉴 개시"],
+  ["골목","오모이데 요코초","思い出横丁","야키토리","焼き鳥","신주쿠","","전후 암시장에서 시작된 좁은 골목에 야키토리집 60여 곳"],
+  ["골목","논베이 요코초","のんべい横丁","작은 바·이자카야","呑兵衛","시부야","","예닐곱 명이 앉는 작은 가게가 이어진 시부야 술골목"],
+  ["골목","유라쿠초 가드시타","有楽町ガード下","이자카야","ガード下","유라쿠초","","철로 고가 아래 퇴근길 직장인들의 대중 술집"],
+  ["골목","츠키시마 몬자 스트리트","月島もんじゃストリート","몬자야키","もんじゃ","츠키시마","","몬자야키 가게 70여 곳이 모인 거리"],
+  ["라멘","AFURI","AFURI","유자 시오 라멘","柚子塩","에비스","","유자 향 맑은 소금 라멘"]],
+ hakone:[["노포","후지야 호텔 '더 후지야'","富士屋ホテル","비프 카레","カレー","미야노시타","1878","일본 최초 리조트 호텔의 클래식 카레"],
+  ["노포","아마자케 차야","甘酒茶屋","아마자케·치카라모치","甘酒","구 하코네 가도","에도 시대","옛길 위 초가 찻집, 단술과 떡"]],
+ fuji:[["명물","고슈 호토 코사쿠","小作","호토","ほうとう","가와구치코","","호박 호토가 대표 메뉴인 호토 전문점"],
+  ["포장마차","오시노 핫카이 노점","忍野八海","쿠사모치·구이떡","草餅","오시노","","샘물 마을 노점의 쑥떡과 구운 옥수수"]],
+ osaka:[["노포","지유켄","自由軒","명물 카레","カレー","난바","1910","밥과 카레를 미리 비벼 날달걀을 올린 명물 카레"],
+  ["노포","메오토젠자이","夫婦善哉","단팥죽","ぜんざい","호젠지요코초","1883","한 사람 몫을 두 그릇에 나눠 주는 단팥죽"],
+  ["노포","요시노스시","吉野寿司","하코즈시","箱寿司","요도야바시","1841","오사카식 상자 누름초밥의 원조"],
+  ["명물","도톤보리 이마이","道頓堀今井","키츠네 우동","きつね","도톤보리","1946","다시마 육수와 달달한 유부의 키츠네 우동"],
+  ["골목","우라난바","裏なんば","이자카야","裏なんば","난바","","난바 뒷골목 작은 술집 수백 곳"],
+  ["골목","잔잔요코초","ジャンジャン横丁","쿠시카츠·도테야키","串カツ","신세카이","","쿠시카츠와 장기 기원이 이어진 옛 골목"],
+  ["골목","텐마","天満","대중 술집","天満","텐마","","일본에서 가장 긴 상점가 옆 저렴한 술집 거리"],
+  ["명물","551 호라이","551蓬莱","부타만","豚まん","난바 본점","","오사카 사람들의 손에 들린 빨간 봉투 찐빵"],
+  ["디저트","리쿠로 오지상","りくろーおじさんの店","치즈케이크","チーズケーキ","난바","","굽자마자 종을 울리는 폭신한 치즈케이크"]],
+ kyoto:[["노포","혼케 오와리야","本家尾張屋","호라이 소바","蕎麦","가라스마","1465","550년 넘은 소바집, 5단 찬합 호라이 소바"],
+  ["노포","이치와","一文字屋和輔","아부리모치","あぶり餅","이마미야 신사","1000","천 년 넘게 이어진 일본 최고(最古)급 떡집"],
+  ["노포","소혼케 니신소바 마츠바","松葉","니신소바","にしん","기온 미나미자","1861","달게 졸인 청어를 올린 니신소바 발상지"],
+  ["노포","효테이","瓢亭","반숙 달걀·아침죽","瓢亭玉子","난젠지","에도 초기","미쉐린 3스타 요정의 명물 반숙 달걀"],
+  ["골목","폰토초","先斗町","교요리·이자카야","先斗町","가모가와 변","","좁은 돌길에 등불이 걸린 교토 대표 술골목"],
+  ["시장","니시키 시장","錦市場","길거리 음식","錦市場","시조","","교토의 부엌, 두부 도넛·다시마키·꼬치"],
+  ["라멘","혼케 다이이치아사히","本家第一旭","교토 라멘","ラーメン","교토역","","간장 돼지뼈 국물, 아침부터 줄 서는 집"]],
+ nara:[["노포","기쿠야","菊屋","우구이스모치","鶯餅","야마토코리야마","1585","도요토미 히데요시에게 바쳤다는 화과자 노포"],
+  ["골목","나라마치","ならまち","카페·이자카야","ならまち","나라마치","","에도 시대 상가 건물이 남은 골목 카페 거리"],
+  ["디저트","마호로바 대불 푸딩","まほろば大仏プリン","푸딩","プリン","나라역","","대불 그림 병에 담긴 나라 명물 푸딩"]],
+ kobe:[["포장마차","난킨마치 노점","南京町","길거리 중화요리","南京町","모토마치","","차이나타운 노점의 소룡포·베이징덕 랩"],
+  ["명물","아카시야키 키무라야","きむらや","아카시야키","明石焼","아카시","","다시에 찍어 먹는 달걀 타코야키"],
+  ["디저트","고베 프린","神戸プリン","푸딩","プリン","산노미야","","고베 기념품 1순위 푸딩"]],
+ nagoya:[["노포","야마모토야 소혼케","山本屋総本家","미소니코미 우동","味噌煮込","사카에","1907","된장 국물에 끓인 꼬들한 우동"],
+  ["노포","미야 기시멘","宮きしめん","기시멘","きしめん","아츠타 신궁 안","1923","넓적한 면의 나고야 우동"],
+  ["명물","미센","味仙","대만 라멘","台湾ラーメン","이마이케","","나고야에서 탄생한 매운 대만 라멘의 원조"],
+  ["명물","텐무스 센주","千寿","텐무스","天むす","오스","","새우튀김 주먹밥 텐무스의 원조"],
+  ["명물","코메다 커피","コメダ珈琲店","모닝 세트","モーニング","시내 각지","","커피 한 잔에 토스트가 따라오는 나고야 모닝"]],
+ kanazawa:[["노포","오토모로","大友楼","가가 요리·지부니","治部煮","가나자와역 인근","1830","가가번 요리를 이어 온 요정"],
+  ["노포","아카다마","赤玉","가나자와 오뎅","おでん","가타마치","1927","게 껍질째 끓이는 카니멘 오뎅"],
+  ["골목","가타마치·기야마치","片町","이자카야","片町","가타마치","","호쿠리쿠 최대 번화가의 오뎅·해산물 술집"]],
+ sapporo:[["노포","아지노산페이","味の三平","미소 라멘","味噌","다누키코지","1950","미소 라멘을 처음 만든 집"],
+  ["노포","마사즈시","政寿司","스시","寿司","오타루 스시 거리","1938","오타루 스시 거리의 대표 노포"],
+  ["골목","원조 라멘 요코초","元祖さっぽろラーメン横丁","라멘","ラーメン横丁","스스키노","","라멘집 17곳이 모인 원조 골목"],
+  ["시장","니조 시장","二条市場","카이센동","海鮮丼","오도리","","게·성게·연어알 덮밥 아침 식사"],
+  ["명물","삿포로 맥주원","サッポロビール園","징기스칸·생맥주","ジンギスカン","히가시구","","붉은 벽돌 공장 건물의 무제한 징기스칸"],
+  ["디저트","시메 파르페","しめパフェ","시메 파르페","パフェ","스스키노","","술자리 마무리로 먹는 삿포로식 밤 파르페"]],
+ hakodate:[["골목","다이몬 요코초","大門横丁","포장마차촌","屋台村","하코다테역 앞","","작은 가게 20여 곳이 모인 포장마차 골목"],
+  ["노포","고토켄","五島軒","양식·카레","カレー","모토마치","1879","메이지 시대부터 이어진 서양 요리점"],
+  ["명물","하세가와 스토어","ハセガワストア","야키토리 벤토","やきとり弁当","베이에어리어","","돼지고기 꼬치를 올린 하코다테 명물 도시락"]],
+ sendai:[["골목","이로하 요코초","壱弐参横丁","이자카야·카페","横丁","아오바도리","","전후 시장에서 이어진 100여 곳의 골목"],
+  ["골목","분카 요코초","文化横丁","대중 술집","文化横丁","이치반초","","다이쇼 시대부터 이어진 센다이 술골목"],
+  ["명물","규탄 리큐","利久","규탄 정식","牛たん","센다이역","","보리밥·테일 수프와 함께 나오는 규탄 정식"]],
+ hiroshima:[["골목","오코노미무라","お好み村","오코노미야키","お好み焼","신텐치","","오코노미야키 가게 20여 곳이 모인 빌딩"],
+  ["노포","후지이야","藤い屋","모미지 만쥬","もみじ饅頭","미야지마","1925","단풍잎 모양 만쥬 노포"],
+  ["명물","모미지도","紅葉堂","아게모미지","揚げもみじ","미야지마","","튀김옷을 입혀 튀긴 모미지 만쥬"],
+  ["명물","바쿠단야","ばくだん屋","히로시마 츠케멘","つけ麺","나가레카와","","고추기름 소스에 찍어 먹는 매운 츠케멘"],
+  ["명물","킹켄","キング軒","시루나시 탄탄멘","汁なし担担麺","나카마치","","국물 없는 산초 탄탄멘"]],
+ takamatsu:[["노포","우동 혼진 야마다야","うどん本陣 山田家","자루 우동","ざるうどん","무레","","옛 호농 저택에서 먹는 우동"],
+  ["명물","우동보","うどん棒","가케 우동","かけうどん","다카마쓰","","시내에서 가기 쉬운 사누키 우동집"]],
+ fukuoka:[["포장마차","나카스 야타이 거리","中洲屋台","라멘·오뎅·꼬치","屋台","나카스 강변","","강변을 따라 저녁마다 서는 포장마차 거리"],
+  ["포장마차","텐진 야타이","天神屋台","야키라멘·교자","屋台","텐진","","직장인이 많은 텐진 거리의 포장마차"],
+  ["포장마차","코킨짱","小金ちゃん","야키라멘","焼きラーメン","텐진","","야키라멘을 처음 만든 포장마차"],
+  ["노포","간소 나가하마야","元祖長浜屋","나가하마 라멘","長浜","나가하마","1952","메뉴가 라멘 하나뿐인 나가하마 라멘의 원조"],
+  ["노포","미즈타키 나가노","水炊き長野","미즈타키","水炊き","하카타","1930","뽀얀 닭 육수 전골 미즈타키 노포"],
+  ["노포","간소 모토요시야","元祖本吉屋","장어 세이로무시","せいろ蒸し","야나가와","1681","300년 넘은 찐 장어덮밥"],
+  ["명물","하카타 테츠나베","鉄なべ","철판 교자","鉄鍋餃子","나카스","","한입 크기 교자를 철냄비째 내는 집"],
+  ["명물","마키노 우동","牧のうどん","부드러운 우동","うどん","시내 각지","","국물을 빨아들이는 부드러운 하카타 우동"]],
+ nagasaki:[["노포","쇼오켄","松翁軒","카스텔라","カステラ","시청 인근","1681","후쿠사야와 함께 꼽히는 카스텔라 노포"],
+  ["노포","요소","吉宗","차완무시","茶碗むし","하마노마치","1866","차완무시와 무시즈시 세트로 유명"],
+  ["포장마차","신치 차이나타운","新地中華街","카쿠니만쥬·사라우동","中華街","신치","","일본 3대 차이나타운의 길거리 음식"],
+  ["명물","빅맨","ビッグマン","사세보 버거","佐世保バーガー","사세보","","미군 기지 문화에서 태어난 수제 버거"]],
+ kagoshima:[["명물","구마소테이","熊襲亭","사츠마 향토 요리","きびなご","텐몬칸","","키비나고 회와 흑돼지 샤브샤브"],
+  ["노포","히라타 잼보모치","平田屋","잼보모치","じゃんぼ餅","센간엔 앞","","꼬치 두 개를 꽂은 달콤한 떡"],
+  ["명물","사츠마아게","さつま揚げ","사츠마아게","さつま揚","텐몬칸","","갓 튀긴 어묵을 사 먹는 가고시마 길거리 음식"]],
+ okinawa:[["시장","제1 마키시 공설시장","第一牧志公設市場","해산물 즉석 요리","市場","국제거리","","1층에서 생선을 고르면 2층 식당에서 요리"],
+  ["골목","사카에마치 시장","栄町市場","이자카야","栄町","아사토","","낮엔 시장, 밤엔 작은 술집이 되는 골목"],
+  ["노포","센니치","千日","오키나와 젠자이","ぜんざい","나하","1961","단팥 대신 강낭콩을 올린 오키나와식 빙수"],
+  ["노포","잭스 스테이크 하우스","ジャッキーステーキハウス","스테이크","ステーキ","나하","1953","미군 통치 시절부터 이어진 스테이크집"],
+  ["명물","A&W","A&W","루트비어·버거","ルートビア","마키미나토","1963","일본 1호 패스트푸드 체인"]]
+};
+const TAGCLS = {"노포":"t-old","포장마차":"t-yatai","골목":"t-alley","시장":"t-market"};
+const TONES = [["#7a3a1a","#c9864a"],["#5a2e14","#b8763a"],["#8a5a2a","#d49a5a"],["#6a3a2a","#b8765a"],["#7a6a2a","#c9b45c"],["#3a5a6a","#8ab0c4"],["#8a3a2a","#d47a5a"],["#4f6b2a","#9bb35a"]];
+const tone = s => TONES[[...s].reduce((a,c)=>a+c.charCodeAt(0),0)%TONES.length];
+
 const FL = [
  ["도쿄 NRT · HND","2시간 20분","07:30–10:30","13:00–17:00","대한항공, 아시아나, 제주항공, 진에어, 티웨이, 피치, ZIPAIR / 김포↔하네다 JAL·ANA"],
  ["오사카 KIX","1시간 40분","07:00–10:30","12:30–17:00","대한항공, 아시아나, 제주항공, 진에어, 티웨이, 에어부산, 피치"],
@@ -439,6 +565,21 @@ function photo(f, i, r){
     <span class="g">실사 사진 보기 ↗</span></a>`;
 }
 
+
+function thumb(x, key){
+  const [tag,shop,sjp,dish,djp] = x, c = tone(sjp);
+  return `<a class="thumb" href="${G(sjp+" "+dish.split("·")[0])}" target="_blank" rel="noopener" style="background:linear-gradient(140deg,${c[0]},${c[1]})" aria-label="${esc(shop)} ${esc(dish)} 실사 사진 보기">
+    ${HAS_PHOTOS?`<img src="img/${key}.jpg" alt="" loading="lazy">`:""}<span class="ph" style="font-size:${djp.length>5?11:djp.length>3?13:15}px">${esc(djp)}</span></a>`;
+}
+function xItem(x, key, regionName){
+  const [tag,shop,sjp,dish,djp,area,yr,note] = x;
+  return `<div class="x">${thumb(x,key)}<div class="x-body">
+    ${regionName?`<span class="rg">${esc(regionName)}</span><br>`:""}
+    <h5><span class="tg ${TAGCLS[tag]||""}">${tag}</span>${esc(shop)}<span class="sjp">${esc(sjp)}</span>${yr?`<span class="yr">${/^\d+$/.test(yr)?"since "+yr:esc(yr)}</span>`:""}</h5>
+    <div class="meta">${esc(dish)} · <a href="${M(sjp+" "+area)}" target="_blank" rel="noopener">${esc(area)}</a></div>
+    <p>${esc(note)}</p></div></div>`;
+}
+
 function region(r){
   return `<section class="region" id="${r.id}" data-grp="${r.grp}">
    <div class="sign" style="--sign:${r.line}">
@@ -452,6 +593,8 @@ function region(r){
    <div class="foods">${r.foods.map((f,i)=>`<article class="food">${photo(f,i,r)}
      <div class="food-body"><span class="dish">${esc(f.d)}</span><h3>${esc(f.s)}</h3><span class="shopjp">${esc(f.sjp)}</span>
      <span class="area"><a href="${M(f.sjp+" "+r.jp)}" target="_blank" rel="noopener">📍 ${esc(f.a)}</a></span><p>${esc(f.n)}</p></div></article>`).join("")}</div>
+   ${EX[r.id]?`<div class="more"><div class="more-head"><h4>더 먹어볼 곳 · 노포 · 포장마차 · 골목</h4><span class="muted" style="font-size:12px">${EX[r.id].length}곳 · 사진을 누르면 실사 이미지</span></div>
+     <div class="xlist">${EX[r.id].map((x,i)=>xItem(x,`${r.id}-x${i+1}`)).join("")}</div></div>`:""}
    <div class="grid2">
      <div class="panel"><h4>꼭 가볼 곳 · 이름을 누르면 사진</h4><ul class="sights">${r.sights.map(([n,d])=>`<li><i class="pin" aria-hidden="true"></i><div><a href="${G(r.ko.split(" ")[0]+" "+n.split(" · ")[0])}" target="_blank" rel="noopener">${esc(n)}</a><br><span>${esc(d)}</span></div></li>`).join("")}</ul></div>
      <div class="panel"><h4>여행 기간 축제 · 이벤트</h4><div class="events">${r.ev.map(e=>`<div class="ev${e.h?' hot':''}"><b>${esc(e.n)}<span class="st">${esc(e.s)}</span></b><span class="when">${esc(e.w)}</span><p>${esc(e.p)}</p></div>`).join("")}</div></div>
@@ -460,6 +603,21 @@ function region(r){
 
 document.getElementById("regions").innerHTML = R.map(region).join("");
 document.getElementById("flightRows").innerHTML = FL.map(f=>`<tr><td><b>${f[0]}</b></td><td class="t">${f[1]}</td><td class="t">${f[2]}</td><td class="t">${f[3]}</td><td>${f[4]}</td></tr>`).join("");
+
+
+/* old shops / yatai collection */
+const COLL = [["노포",x=>x[0]==="노포"],["포장마차·골목·시장",x=>["포장마차","골목","시장"].includes(x[0])]];
+const ctabs = document.getElementById("collTabs"), coll = document.getElementById("coll");
+ctabs.innerHTML = COLL.map((c,i)=>`<button class="chip" role="tab" id="ctab-${i}" aria-pressed="${i===0}" data-i="${i}">${c[0]} <span class="muted">${R.reduce((n,r)=>n+(EX[r.id]||[]).filter(c[1]).length,0)}</span></button>`).join("");
+function showColl(i){
+  ctabs.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.i==i));
+  let items = [];
+  R.forEach(r=>(EX[r.id]||[]).forEach((x,k)=>{ if(COLL[i][1](x)) items.push([x,`${r.id}-x${k+1}`,r.ko]); }));
+  if(i===0) items.sort((a,b)=>(parseInt(a[0][6])||9999)-(parseInt(b[0][6])||9999));
+  coll.innerHTML = items.map(([x,k,n])=>xItem(x,k,n)).join("");
+}
+ctabs.addEventListener("click",e=>{const b=e.target.closest(".chip"); if(b) showColl(+b.dataset.i);});
+showColl(0);
 
 /* region filter */
 const groups = ["전체", ...new Set(R.map(r=>r.grp))];
