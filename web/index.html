@@ -211,6 +211,7 @@ html{scroll-behavior:smooth}
     <div class="eyebrow">Travel report · 2026 autumn</div>
     <h1><span class="jp">晩秋の日本</span>11월 하순, 일본 18개 도시<br>맛집과 단풍 노트</h1>
     <p>11월 20일 금요일에 오전 비행기로 떠나 24일 화요일 오후에 돌아오는 4박 5일 일정입니다. 지역마다 대표 음식 3가지와 그 음식으로 가장 유명한 가게, 꼭 가야 할 곳, 이 기간에 열리는 축제를 정리했습니다. 사진을 누르면 구글 이미지 검색으로 더 많은 사진을 볼 수 있습니다.</p>
+    <p><a href="sapporo.html" style="font-weight:600;color:var(--ink)">삿포로 4박 5일 집중 가이드 보기 →</a> <span class="muted" style="font-size:13px">코스, 근교 교통편, 표 사는 법, 예상 요금</span></p>
   </div>
   <div class="pass" aria-label="여행 일정 요약">
     <div class="pass-main">
@@ -584,7 +585,7 @@ function region(r){
   return `<section class="region" id="${r.id}" data-grp="${r.grp}">
    <div class="sign" style="--sign:${r.line}">
      <div class="sign-top">
-       <div class="sign-name"><span class="kanji">${r.jp}</span><span class="ko">${r.ko}</span><span class="ro">${r.ro}</span>${r.best?'<span class="star">이 시기 1순위</span>':''}</div>
+       <div class="sign-name"><span class="kanji">${r.jp}</span><span class="ko">${r.ko}</span><span class="ro">${r.ro}</span>${r.best?'<span class="star">이 시기 1순위</span>':''}${r.id==="sapporo"?'<a class="star" style="background:var(--sign);text-decoration:none" href="sapporo.html">삿포로 집중 가이드 →</a>':''}</div>
        <div class="sign-meta">11월 하순 기온<b>${r.temp}</b></div>
      </div>
      <div class="sign-line"></div>
