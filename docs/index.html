@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>일본 늦가을 여행 노트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Shippori+Mincho+B1:wght@600;800&display=swap">
+<style>
+body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: a JR-style station-sign header per region, then a 3-up food row, sights + seasonal events side by side. Boarding-pass hero up top. */
+:root{
+  --paper:#f4f6f8;      /* washi with a cool bias */
+  --card:#ffffff;
+  --ink:#18213a;        /* ai-iro indigo ink */
+  --ink-soft:#4a5470;
+  --line:#d9dee7;
+  --momiji:#b8432c;     /* maple leaf */
+  --ginkgo:#c8941a;     /* ginkgo gold */
+  --sign:#1f6f5c;       /* station sign line color */
+  --chip:#e8ecf3;
+  --f-display:"Gowun Batang","Shippori Mincho B1",serif;
+  --f-jp:"Shippori Mincho B1","Gowun Batang",serif;
+  --f-body:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0f1424;--card:#171e33;--ink:#e8ebf3;--ink-soft:#a7b0c6;--line:#2a3350;
+  --momiji:#e0715a;--ginkgo:#e3b443;--sign:#4fb89c;--chip:#222b45;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0f1424;--card:#171e33;--ink:#e8ebf3;--ink-soft:#a7b0c6;--line:#2a3350;
+  --momiji:#e0715a;--ginkgo:#e3b443;--sign:#4fb89c;--chip:#222b45;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:28px 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.25}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--momiji);outline-offset:2px;border-radius:4px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--momiji)}
+.muted{color:var(--ink-soft)}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center;padding-block:12px 36px}
+.hero h1{font-size:clamp(34px,5.4vw,56px);font-weight:700;letter-spacing:-.01em}
+.hero h1 .jp{display:block;font-family:var(--f-jp);font-size:.42em;color:var(--ink-soft);letter-spacing:.3em;margin-bottom:10px}
+.hero p{max-width:52ch;color:var(--ink-soft);margin:16px 0 0}
+.pass{background:var(--card);border:1px solid var(--line);border-radius:16px;display:grid;grid-template-columns:1fr auto;overflow:hidden;box-shadow:0 10px 30px -18px rgba(20,30,60,.35)}
+.pass-main{padding:20px 22px;display:grid;gap:14px;min-width:0}
+.pass-row{display:flex;justify-content:space-between;gap:12px;align-items:end;flex-wrap:wrap}
+.pass .code{font-family:var(--f-mono);font-size:30px;font-weight:500;letter-spacing:.04em}
+.pass .lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;color:var(--ink-soft);text-transform:uppercase}
+.pass .plane{flex:1;border-top:1.5px dashed var(--line);margin:0 6px 14px;min-width:30px;position:relative}
+.pass .plane::after{content:"✈";position:absolute;left:50%;top:-12px;transform:translateX(-50%);background:var(--card);padding:0 6px;color:var(--momiji)}
+.pass-stub{border-left:2px dashed var(--line);padding:20px 18px;display:grid;align-content:center;gap:6px;text-align:center;background:linear-gradient(var(--chip),var(--chip))}
+.pass-stub b{font-family:var(--f-mono);font-size:22px;font-weight:500}
+.legs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.leg{border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.leg .t{font-family:var(--f-mono);font-size:17px;font-variant-numeric:tabular-nums}
+
+/* ---------- key facts ---------- */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-block:8px 40px}
+.fact{background:var(--card);padding:16px 18px;min-width:0}
+.fact h3{font-size:16px;margin-bottom:4px}
+.fact p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+.fact .tag{display:inline-block;font-family:var(--f-mono);font-size:11px;padding:2px 8px;border-radius:999px;background:var(--chip);margin-bottom:8px}
+.fact.warn .tag{background:var(--momiji);color:var(--card)}
+
+/* ---------- calendar ---------- */
+section.block{margin-block:44px}
+.block-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.block-head h2{font-size:clamp(24px,3vw,30px)}
+.cal-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+.cal{display:grid;grid-template-columns:150px repeat(5,minmax(110px,1fr));min-width:720px;font-size:13px}
+.cal > div{padding:9px 10px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.cal .dh{font-family:var(--f-mono);font-size:12px;text-align:center;background:var(--chip)}
+.cal .dh b{display:block;font-size:18px;font-weight:500}
+.cal .dh.hol{color:var(--momiji)}
+.cal .rh{font-weight:600}
+.cal .rh small{display:block;font-weight:400;color:var(--ink-soft);font-size:11.5px}
+.bar{border-radius:6px;padding:4px 8px;font-size:12px;line-height:1.35;color:#fff}
+.bar.momiji{background:var(--momiji)}.bar.ginkgo{background:var(--ginkgo);color:#1c1606}.bar.sign{background:var(--sign)}.bar.ink{background:var(--ink);color:var(--paper)}
+.span2{grid-column:span 2}.span3{grid-column:span 3}.span5{grid-column:span 5}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);padding-block:10px;margin-inline:-20px;padding-inline:20px;border-bottom:1px solid var(--line)}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:500 13px var(--f-body);border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ---------- region ---------- */
+.region{margin-block:40px 56px;scroll-margin-top:70px}
+.sign{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.sign-top{display:grid;grid-template-columns:1fr auto;gap:16px;padding:18px 22px 12px;align-items:end}
+.sign-name{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;min-width:0}
+.sign-name .kanji{font-family:var(--f-jp);font-weight:800;font-size:clamp(34px,5vw,48px);letter-spacing:.12em;line-height:1}
+.sign-name .ko{font-family:var(--f-display);font-size:22px;font-weight:700}
+.sign-name .ro{font-family:var(--f-mono);font-size:12px;letter-spacing:.18em;color:var(--ink-soft);text-transform:uppercase}
+.sign-meta{text-align:right;font-family:var(--f-mono);font-size:12px;color:var(--ink-soft);white-space:nowrap}
+.sign-meta b{display:block;font-size:15px;color:var(--ink);font-weight:500}
+.sign-line{height:10px;background:var(--sign);position:relative}
+.sign-bottom{display:flex;justify-content:space-between;gap:12px;padding:8px 22px;font-size:12.5px;color:var(--ink-soft);flex-wrap:wrap}
+.sign-bottom .tagline{color:var(--ink);font-weight:500}
+.star{display:inline-block;font-family:var(--f-mono);font-size:11px;background:var(--momiji);color:var(--card);padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+
+.foods{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.food{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.photo{position:relative;aspect-ratio:4/3;max-width:100%;overflow:hidden;display:grid;place-items:center;text-decoration:none}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.photo .ph{font-family:var(--f-jp);font-weight:800;font-size:clamp(30px,3.6vw,40px);letter-spacing:.08em;color:rgba(255,255,255,.92);text-align:center;padding:0 12px;line-height:1.2;text-shadow:0 1px 0 rgba(0,0,0,.08)}
+.photo .rank{position:absolute;left:12px;top:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;background:rgba(0,0,0,.35);color:#fff;padding:3px 8px;border-radius:4px}
+.photo .g{position:absolute;right:10px;bottom:10px;font-size:12px;background:rgba(255,255,255,.94);color:#18213a;padding:5px 10px;border-radius:999px;font-weight:500;transition:transform .15s}
+.photo:hover .g{transform:translateY(-2px)}
+.food-body{padding:14px 16px 16px;display:grid;gap:4px}
+.food-body .dish{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;color:var(--momiji)}
+.food-body h3{font-size:18px}
+.food-body .shopjp{font-family:var(--f-jp);font-size:13px;color:var(--ink-soft)}
+.food-body .area{font-size:12.5px;color:var(--ink-soft)}
+.food-body p{margin:6px 0 0;font-size:13.5px}
+
+.grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-top:16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;min-width:0}
+.panel h4{margin:0 0 10px;font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+.sights{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.sights li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.sights li a{font-weight:600;text-decoration:none;border-bottom:1px solid var(--line)}
+.sights li a:hover{border-color:var(--momiji)}
+.sights li span{font-size:13.5px;color:var(--ink-soft)}
+.sights .pin{width:8px;height:8px;border-radius:50%;background:var(--sign);margin-top:8px}
+.events{display:grid;gap:10px}
+.ev{border-left:3px solid var(--ginkgo);padding:2px 0 2px 12px}
+.ev.hot{border-color:var(--momiji)}
+.ev b{display:block;font-size:14px}
+.ev .when{font-family:var(--f-mono);font-size:12px;color:var(--ink-soft)}
+.ev .st{font-family:var(--f-mono);font-size:11px;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--chip);color:var(--ink)}
+.ev.hot .st{background:var(--momiji);color:var(--card)}
+.ev p{margin:2px 0 0;font-size:13px;color:var(--ink-soft)}
+
+/* ---------- flights table ---------- */
+.tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:13.5px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:500;background:var(--chip)}
+td.t{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+
+/* ---------- itineraries ---------- */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.plan{display:grid;gap:10px}
+.day{display:grid;grid-template-columns:96px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.day .d{font-family:var(--f-mono);font-size:13px}
+.day .d b{display:block;font-size:20px;font-weight:500}
+.day .d.hol{color:var(--momiji)}
+.day p{margin:0;min-width:0}
+
+.tips{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tip{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.tip b{display:block;margin-bottom:2px}
+.tip p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+
+
+/* ---------- more food: thumbnail list ---------- */
+.more{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-top:16px}
+.more-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.more-head h4{margin:0;font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+.legend{display:flex;gap:6px;flex-wrap:wrap}
+.xlist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 18px}
+.x{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:start;min-width:0}
+.thumb{position:relative;width:76px;height:76px;border-radius:8px;overflow:hidden;display:grid;place-items:center;text-decoration:none;flex:none}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb .ph{font-family:var(--f-jp);font-weight:800;font-size:15px;line-height:1.15;color:rgba(255,255,255,.95);text-align:center;padding:0 4px;word-break:keep-all}
+.thumb::after{content:"↗";position:absolute;right:4px;bottom:2px;font-size:11px;color:rgba(255,255,255,.85)}
+.x-body{min-width:0}
+.x-body h5{margin:0;font-size:15px;font-family:var(--f-display);line-height:1.3}
+.x-body .sjp{font-family:var(--f-jp);font-size:12px;color:var(--ink-soft);margin-left:4px}
+.x-body .meta{font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+.x-body p{margin:3px 0 0;font-size:13px}
+.tg{display:inline-block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em;padding:1px 7px;border-radius:999px;margin-right:6px;vertical-align:1px;background:var(--chip);color:var(--ink)}
+.tg.t-old{background:var(--ink);color:var(--paper)}
+.tg.t-yatai{background:var(--momiji);color:var(--card)}
+.tg.t-alley{background:var(--ginkgo);color:#1c1606}
+.tg.t-market{background:var(--sign);color:#fff}
+.yr{font-family:var(--f-mono);font-size:11.5px;color:var(--momiji);margin-left:6px}
+/* collection */
+.coll{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.coll .x-body .rg{font-family:var(--f-mono);font-size:11px;color:var(--ink-soft);letter-spacing:.06em}
+
+@media (max-width:900px){
+  .coll{grid-template-columns:1fr 1fr}
+  .hero{grid-template-columns:1fr}
+  .facts{grid-template-columns:repeat(2,1fr)}
+  .foods{grid-template-columns:1fr 1fr}
+  .grid2{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .wrap{padding-inline:16px}
+  .nav{margin-inline:-16px;padding-inline:16px}
+  .foods,.facts,.tips,.xlist,.coll{grid-template-columns:1fr}
+  .pass{grid-template-columns:1fr}
+  .pass-stub{border-left:0;border-top:2px dashed var(--line);grid-auto-flow:column;justify-content:space-around}
+  .sign-top{grid-template-columns:1fr}
+  .sign-meta{text-align:left}
+  .day{grid-template-columns:1fr;gap:6px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">Travel report · 2026 autumn</div>
+    <h1><span class="jp">晩秋の日本</span>11월 하순, 일본 18개 도시<br>맛집과 단풍 노트</h1>
+    <p>11월 20일 금요일에 오전 비행기로 떠나 24일 화요일 오후에 돌아오는 4박 5일 일정입니다. 지역마다 대표 음식 3가지와 그 음식으로 가장 유명한 가게, 꼭 가야 할 곳, 이 기간에 열리는 축제를 정리했습니다. 사진을 누르면 구글 이미지 검색으로 더 많은 사진을 볼 수 있습니다.</p>
+  </div>
+  <div class="pass" aria-label="여행 일정 요약">
+    <div class="pass-main">
+      <div class="pass-row">
+        <div><div class="lbl">From</div><div class="code">ICN</div></div>
+        <div class="plane" aria-hidden="true"></div>
+        <div style="text-align:right"><div class="lbl">To</div><div class="code">JPN</div></div>
+      </div>
+      <div class="legs">
+        <div class="leg"><div class="lbl">출국 · 11/20 금</div><div class="t">07:00–10:30</div><div class="muted" style="font-size:12px">오전 출발편</div></div>
+        <div class="leg"><div class="lbl">귀국 · 11/24 화</div><div class="t">12:30–17:00</div><div class="muted" style="font-size:12px">오후 출발편</div></div>
+      </div>
+    </div>
+    <div class="pass-stub">
+      <div class="lbl">Nights</div><b>4N5D</b>
+      <div class="lbl">Season</div><b style="color:var(--momiji)">紅葉</b>
+    </div>
+  </div>
+</header>
+
+<div class="facts">
+  <div class="fact"><span class="tag">단풍</span><h3>단풍이 가장 고운 때</h3><p>교토·나라·도쿄·미야지마가 절정입니다. 일 년 중 손꼽히는 성수기입니다.</p></div>
+  <div class="fact warn"><span class="tag">11/23 공휴일</span><h3>현지 3연휴</h3><p>근로감사의 날로 11/21~23이 연휴입니다. 숙소와 신칸센을 서둘러 예약하세요.</p></div>
+  <div class="fact"><span class="tag">조명</span><h3>일루미네이션 개막</h3><p>도쿄·오사카·삿포로·나고야의 겨울 조명이 이때 켜집니다.</p></div>
+  <div class="fact"><span class="tag">기온</span><h3>본토 7~17℃</h3><p>삿포로 0~6℃(첫눈 가능), 오키나와 19~24℃. 본토는 니트와 가벼운 코트면 됩니다.</p></div>
+</div>
+
+<section class="block" id="calendar">
+  <div class="block-head">
+    <div><div class="eyebrow">11.20 – 11.24</div><h2>여행 기간 축제·이벤트 달력</h2></div>
+    <span class="muted" style="font-size:13px">2026년 일정은 각 공식 사이트에서 한 번 더 확인하세요</span>
+  </div>
+  <div class="cal-scroll">
+    <div class="cal" role="table" aria-label="날짜별 이벤트">
+      <div class="dh" role="columnheader">지역</div>
+      <div class="dh">FRI<b>20</b></div><div class="dh">SAT<b>21</b></div><div class="dh">SUN<b>22</b></div><div class="dh hol">MON · 공휴일<b>23</b></div><div class="dh">TUE<b>24</b></div>
+
+      <div class="rh">교토<small>단풍 야간 특별 관람</small></div><div class="span5"><div class="bar momiji">에이칸도·기요미즈데라·도후쿠지 단풍 절정 + 야간 라이트업 (11월 중순~12월 초)</div></div>
+      <div class="rh">도쿄<small>진구가이엔</small></div><div class="span5"><div class="bar ginkgo">이초 마츠리 · 은행나무길 황금빛 절정 (11월 중순~12월 초)</div></div>
+      <div class="rh">후쿠오카<small>스모 11월 대회</small></div><div class="span3"><div class="bar ink">오즈모 규슈 바쇼 마지막 3일 · 22일 센슈라쿠(최종일) 예상</div></div><div></div><div></div>
+      <div class="rh">삿포로<small>오도리 공원</small></div><div class="span5"><div class="bar sign">화이트 일루미네이션 점등 시작 무렵 · 뮌헨 크리스마스 마켓 개막 시기</div></div>
+      <div class="rh">야마나시<small>가와구치코</small></div><div class="span3"><div class="bar momiji">단풍 축제 막바지 · 모미지 회랑 라이트업</div></div><div></div><div></div>
+      <div class="rh">나고야 근교<small>고란케이·나바나노사토</small></div><div class="span5"><div class="bar momiji">고란케이 단풍 절정 · 나바나노사토 겨울 일루미네이션</div></div>
+      <div class="rh">가나자와<small>제철 미식</small></div><div class="span5"><div class="bar sign">대게·노도구로 제철 (11/6 조업 해금) · 겐로쿠엔 유키츠리</div></div>
+      <div class="rh">일본 전역<small>공휴일</small></div><div></div><div class="span3"><div class="bar ink">3연휴 · 관광지 혼잡</div></div><div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="collection">
+  <div class="block-head">
+    <div><div class="eyebrow">Old shops · Yatai · Yokocho</div><h2>노포와 포장마차, 골목 모아보기</h2></div>
+    <div class="legend" id="collTabs" role="tablist"></div>
+  </div>
+  <div class="coll" id="coll"></div>
+</section>
+
+<nav class="nav" aria-label="지역 필터">
+  <div class="chips" id="chips"></div>
+</nav>
+
+<main id="regions"></main>
+
+<section class="block" id="flights">
+  <div class="block-head">
+    <div><div class="eyebrow">Flights</div><h2>항공권 가이드 · 오전 출발, 오후 귀국</h2></div>
+    <span class="muted" style="font-size:13px">인천·김포 출발 기준 보통 운항 시간대입니다. 동계 스케줄 확정 후 확인하세요.</span>
+  </div>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>목적지</th><th>비행시간</th><th>출국 11/20</th><th>귀국 11/24</th><th>주요 항공사</th></tr></thead>
+      <tbody id="flightRows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="plans">
+  <div class="block-head">
+    <div><div class="eyebrow">Itineraries</div><h2>4박 5일 추천 일정</h2></div>
+  </div>
+  <div class="tabs" id="planTabs" role="tablist"></div>
+  <div class="plan" id="plan"></div>
+</section>
+
+<section class="block" id="tips">
+  <div class="block-head"><div><div class="eyebrow">Before you go</div><h2>떠나기 전 체크</h2></div></div>
+  <div class="tips">
+    <div class="tip"><b>입국</b><p>한국 여권은 90일 무비자입니다. Visit Japan Web에 미리 등록하면 입국·세관 절차가 빨라집니다.</p></div>
+    <div class="tip"><b>결제</b><p>트래블 카드가 편리합니다. 노포·야타이·시장은 현금만 받는 곳이 많습니다.</p></div>
+    <div class="tip"><b>교통</b><p>도시 안은 IC카드(Suica·ICOCA)면 충분합니다. 도시 간 이동이 많으면 JR 지역 패스를 비교해 보세요.</p></div>
+    <div class="tip"><b>맛집 대기</b><p>유명 가게는 오픈 30분 전에 도착하거나 타베로그·구글맵 예약을 이용하세요.</p></div>
+    <div class="tip"><b>숙소</b><p>3연휴와 단풍철이 겹쳐 교토 숙소가 가장 먼저 찹니다. 오사카에서 묵고 교토는 당일치기도 방법입니다.</p></div>
+    <div class="tip"><b>면세</b><p>2026년 11월부터 출국 시 환급받는 리펀드 방식으로 바뀔 예정입니다. 공항 절차를 미리 확인하세요.</p></div>
+  </div>
+</section>
+
+<footer>가게 영업 여부, 항공 스케줄, 축제 일정은 작성일(2026-10-01) 기준 일반 정보입니다. 출발 전에 공식 채널에서 다시 확인하세요. 사진을 누르면 구글 이미지 검색으로 더 많은 실사 사진을 볼 수 있습니다.</footer>
+</div>
+
+<script>
+/* photos from Wikimedia Commons: key -> [artist, license, commons page] (filled by build) */
+const PHOTOS = {};
+const G = q => "https://www.google.com/search?tbm=isch&q=" + encodeURIComponent(q);
+const M = q => "https://www.google.com/maps/search/" + encodeURIComponent(q);
+
+/* tile colors per dish: hand-picked to suggest the food itself */
+const R = [
+ {id:"tokyo",grp:"간토",ko:"도쿄",jp:"東京",ro:"Tokyo",temp:"8–16℃",air:"NRT · HND",line:"#2e5aa8",tag:"초밥부터 은행나무길까지, 일본 여행의 기본값",
+  foods:[
+   {d:"에도마에 스시",djp:"寿司",s:"스시다이",sjp:"寿司大",a:"도요스 시장",n:"시장 오마카세의 상징. 새벽부터 줄이 길어 오픈 전에 도착해야 합니다.",c:["#c4473a","#e8a07a"]},
+   {d:"츠케멘",djp:"つけ麺",s:"로쿠린샤",sjp:"六厘舎",a:"도쿄역 라멘 스트리트",n:"진한 돈코츠·어패류 국물에 굵은 면을 찍어 먹는 도쿄역 대표 맛집입니다.",c:["#8a5a2b","#d6a35c"]},
+   {d:"돈카츠",djp:"とんかつ",s:"마이센 아오야마 본점",sjp:"とんかつ まい泉",a:"오모테산도",n:"젓가락으로 잘린다는 부드러운 돈카츠. 히레카츠 샌드도 인기입니다.",c:["#b37a24","#e9c46a"]}],
+  sights:[["센소지 · 나카미세","가미나리몬과 도쿄 대표 사찰"],["시부야 스카이","스크램블 교차로 위 야경 전망대"],["진구가이엔 은행나무길","11월 하순 황금빛 절정"],["신주쿠 교엔","단풍과 국화가 함께 피는 정원"],["메이지 신궁","시치고산 참배 행렬을 볼 수 있는 시기"],["도쿄 스카이트리","634m 전망대"]],
+  ev:[{n:"진구가이엔 이초 마츠리",w:"11월 중순~12월 초",s:"절정",h:1,p:"은행나무 아래 먹거리 부스"},{n:"롯폰기·마루노우치 일루미네이션",w:"11월 중순 점등",s:"진행",p:"게야키자카, 마루노우치 나카도리"},{n:"도리노이치 (아사쿠사 오토리 신사)",w:"11/7·11/19 예상",s:"직전 종료",p:"복을 긁어모으는 갈퀴 장식 시장"}]},
+ {id:"hakone",grp:"간토",ko:"하코네",jp:"箱根",ro:"Hakone",temp:"5–13℃",air:"도쿄에서 1시간 30분",line:"#2e5aa8",tag:"분화구와 호수, 료칸 온천 1박",
+  foods:[
+   {d:"쿠로타마고",djp:"黒たまご",s:"오와쿠다니 쿠로타마고칸",sjp:"黒たまご館",a:"오와쿠다니",n:"유황 온천에 삶은 검은 달걀. 하나 먹으면 7년 더 산다는 이야기가 있습니다.",c:["#2b2b2b","#6b6b6b"]},
+   {d:"소바",djp:"蕎麦",s:"하츠하나 소바 본점",sjp:"はつ花",a:"하코네유모토",n:"물 없이 달걀과 참마로 반죽한 세이로소바로 유명합니다.",c:["#6b5a3e","#b8a27a"]},
+   {d:"두부 요리",djp:"豆腐",s:"하기노 두부점",sjp:"豆腐処 萩野",a:"하코네유모토",n:"하코네 물로 만든 두부와 두유. 산책 중 들르기 좋습니다.",c:["#9aa5ad","#dfe5e8"]}],
+  sights:[["오와쿠다니","연기가 오르는 분화구 계곡"],["아시노코 해적선","호수 위 유람선과 후지산 조망"],["하코네 신사","물 위에 선 도리이"],["조각의 숲 미술관","야외 조각 공원"],["하코네 로프웨이","분화구 위를 지나는 케이블카"]],
+  ev:[{n:"하코네 단풍",w:"11월 중순~하순",s:"절정",h:1,p:"유모토, 조각의 숲, 하코네 미술관 이끼정원"}]},
+ {id:"fuji",grp:"간토",ko:"가와구치코",jp:"河口湖",ro:"Kawaguchiko",temp:"2–13℃",air:"신주쿠에서 버스 2시간",line:"#2e5aa8",tag:"단풍 너머 후지산",
+  foods:[
+   {d:"호토",djp:"ほうとう",s:"호토 후도",sjp:"ほうとう不動",a:"가와구치코",n:"넓적한 면을 된장 국물에 끓인 야마나시 향토 요리. 구름 모양 건물로도 유명합니다.",c:["#a0522d","#e0a96d"]},
+   {d:"요시다 우동",djp:"吉田のうどん",s:"요시다 우동 노포들",sjp:"吉田のうどん",a:"후지요시다",n:"일본에서 가장 단단하다는 면발. 동네 우동집을 순례하듯 다닙니다.",c:["#8c7b5a","#d8c89e"]},
+   {d:"신겐모치",djp:"信玄餅",s:"킨세이켄",sjp:"金精軒",a:"야마나시",n:"콩가루를 묻힌 떡에 흑밀을 뿌려 먹는 야마나시 명과입니다.",c:["#a68a4c","#e6cf8f"]}],
+  sights:[["아라쿠라야마 센겐 공원","오층탑과 후지산이 한 화면에"],["모미지 회랑","단풍 터널과 야간 조명"],["오이시 공원","호수 건너 후지산"],["오시노 핫카이","후지산 용천수 연못 마을"]],
+  ev:[{n:"후지 가와구치코 단풍 축제",w:"11월 초~하순",s:"막바지",h:1,p:"모미지 회랑 라이트업. 2026년 종료일 확인"}]},
+ {id:"osaka",grp:"간사이",ko:"오사카",jp:"大阪",ro:"Osaka",temp:"9–17℃",air:"KIX",line:"#d1503a",tag:"먹다 망한다는 도시, 길거리 음식의 수도",
+  foods:[
+   {d:"타코야키",djp:"たこ焼き",s:"와나카 센니치마에 본점",sjp:"わなか",a:"난바",n:"겉은 바삭하고 속은 촉촉한 타코야키의 대표 주자입니다.",c:["#6e3b1f","#c98a4b"]},
+   {d:"오코노미야키",djp:"お好み焼き",s:"미즈노",sjp:"美津の",a:"도톤보리",n:"1945년 창업, 미쉐린 빕구르망. 참마로 만든 야마이모야키가 명물입니다.",c:["#7a4a22","#d39b52"]},
+   {d:"쿠시카츠",djp:"串カツ",s:"쿠시카츠 다루마 총본점",sjp:"だるま",a:"신세카이",n:"소스는 한 번만 찍는다는 규칙의 원조 가게입니다.",c:["#9c6a1e","#e3b04b"]}],
+  sights:[["도톤보리","글리코 간판과 먹자골목"],["오사카성","니시노마루 정원 단풍"],["유니버설 스튜디오 재팬","슈퍼 닌텐도 월드, 크리스마스 시즌"],["우메다 공중정원","도시 야경"],["구로몬 시장","해산물 길거리 음식"],["신세카이 · 츠텐카쿠","오사카 옛 번화가"]],
+  ev:[{n:"미도스지 일루미네이션",w:"11월 초~12월",s:"진행",h:1,p:"우메다~난바 4km 가로수 조명"},{n:"USJ 크리스마스",w:"11월 중순 개막",s:"진행",p:"대형 트리와 시즌 쇼"}]},
+ {id:"kyoto",grp:"간사이",ko:"교토",jp:"京都",ro:"Kyoto",temp:"7–16℃",air:"오사카에서 30분",line:"#d1503a",tag:"이 시기에 한 곳만 고른다면 여기",best:1,
+  foods:[
+   {d:"유도후",djp:"湯豆腐",s:"오쿠탄 난젠지점",sjp:"奥丹",a:"난젠지",n:"380년 된 두부 전골집. 정원을 보며 식사합니다.",c:["#8d9a8a","#dfe6d8"]},
+   {d:"사바즈시",djp:"鯖寿司",s:"이즈우",sjp:"いづう",a:"기온",n:"1781년 창업. 교토 고등어 초밥의 대명사입니다.",c:["#4b6a88","#a9c1d6"]},
+   {d:"말차 디저트",djp:"抹茶",s:"나카무라 토키치 본점",sjp:"中村藤吉",a:"우지",n:"1854년 창업 찻집. 말차 파르페와 말차 젤리가 유명합니다.",c:["#4f6b2a","#9bb35a"]}],
+  sights:[["에이칸도","'단풍의 에이칸도', 야간 라이트업"],["기요미즈데라","무대 아래로 펼쳐지는 단풍"],["도후쿠지 츠텐쿄","계곡을 덮는 단풍 바다"],["후시미 이나리 신사","천 개의 붉은 도리이"],["아라시야마","대나무숲과 도게츠교"],["철학의 길 · 긴카쿠지","단풍 산책 코스"]],
+  ev:[{n:"가을 야간 특별 관람",w:"11월 중순~12월 초",s:"절정",h:1,p:"기요미즈데라·에이칸도·고다이지·쇼렌인"},{n:"3연휴 혼잡 주의",w:"11/21~23",s:"주의",p:"인기 사찰은 아침 8시 개문 직후가 한산합니다"}]},
+ {id:"nara",grp:"간사이",ko:"나라",jp:"奈良",ro:"Nara",temp:"6–16℃",air:"교토·오사카에서 45분",line:"#d1503a",tag:"사슴과 대불, 단풍 속 고도",
+  foods:[
+   {d:"요모기 모치",djp:"よもぎ餅",s:"나카타니도",sjp:"中谷堂",a:"산조도리",n:"초고속 떡메치기 퍼포먼스로 세계적으로 유명한 쑥떡집입니다.",c:["#5d7a3a","#a7c27a"]},
+   {d:"카키노하즈시",djp:"柿の葉寿司",s:"히라소",sjp:"平宗",a:"나라마치",n:"1861년 창업. 감잎에 싼 고등어·연어 초밥입니다.",c:["#7a6a2a","#c9b45c"]},
+   {d:"카마메시",djp:"釜めし",s:"시즈카 공원점",sjp:"志津香",a:"나라 공원",n:"일곱 가지 재료를 올린 나라 솥밥. 늘 대기줄이 있습니다.",c:["#7a4f2a","#c9925c"]}],
+  sights:[["도다이지","세계 최대급 목조 건물과 대불"],["나라 공원","천여 마리 사슴"],["가스가타이샤","석등 3,000기의 신사"],["고후쿠지 오층탑","나라의 상징"],["요시키엔","단풍 정원"]],
+  ev:[{n:"나라 공원·요시키엔 단풍",w:"11월 하순",s:"절정",h:1,p:"사슴과 단풍을 함께"},{n:"쇼소인 전",w:"10월 말~11월 중순",s:"직전 종료",p:"나라 국립박물관 보물전"}]},
+ {id:"kobe",grp:"간사이",ko:"고베",jp:"神戸",ro:"Kobe",temp:"9–17℃",air:"오사카에서 25분",line:"#d1503a",tag:"항구 야경과 고베규",
+  foods:[
+   {d:"고베규",djp:"神戸牛",s:"모리야 본점",sjp:"モーリヤ",a:"산노미야",n:"1885년 창업. 철판에서 구워 주는 고베규 스테이크 노포입니다.",c:["#7a2e2a","#c96a5c"]},
+   {d:"부타만",djp:"豚まん",s:"로쇼키",sjp:"老祥記",a:"난킨마치",n:"1915년 창업, 일본 돼지고기 찐빵의 원조입니다.",c:["#b49a7a","#efe2cc"]},
+   {d:"소바메시",djp:"そばめし",s:"나가타 소바메시 노포들",sjp:"長田そばめし",a:"나가타구",n:"야키소바와 볶음밥을 함께 볶은 고베 서민 음식입니다.",c:["#5a3a22","#a87648"]}],
+  sights:[["기타노 이진칸","서양식 저택 거리"],["메리켄 파크 · 하버랜드","항구 산책"],["마야산 기쿠세이다이","일본 3대 야경"],["아리마 온천","금천·은천 온천 마을"]],
+  ev:[{n:"하버랜드 일루미네이션",w:"11월 중순 점등",s:"진행",p:"루미나리에는 1월 개최라 이 시기엔 없습니다"}]},
+ {id:"nagoya",grp:"주부",ko:"나고야",jp:"名古屋",ro:"Nagoya",temp:"7–16℃",air:"NGO",line:"#e08a1e",tag:"된장과 장어, 나고야메시",
+  foods:[
+   {d:"히츠마부시",djp:"ひつまぶし",s:"아츠타 호라이켄 본점",sjp:"あつた蓬莱軒",a:"아츠타",n:"1873년 창업, 장어덮밥 히츠마부시의 원조입니다.",c:["#5a2e14","#b8763a"]},
+   {d:"미소카츠",djp:"味噌カツ",s:"야바톤 본점",sjp:"矢場とん",a:"야바초",n:"진한 핫초 된장 소스를 듬뿍 부은 돈카츠입니다.",c:["#4a2a18","#9a5e34"]},
+   {d:"테바사키",djp:"手羽先",s:"세카이노 야마짱",sjp:"世界の山ちゃん",a:"사카에",n:"후추를 듬뿍 뿌린 바삭한 닭날개 튀김입니다.",c:["#8a4a1a","#d48a3a"]}],
+  sights:[["나고야성","금 샤치호코의 성"],["아츠타 신궁","삼종신기 중 하나를 모신 신궁"],["오스 상점가","노포와 서브컬처 거리"],["지브리 파크","사전 예약제"],["도요타 산업기술기념관","자동차 산업 박물관"]],
+  ev:[{n:"고란케이 단풍 축제",w:"11월 한 달",s:"절정",h:1,p:"단풍 4,000그루와 야간 조명"},{n:"나바나노사토 일루미네이션",w:"10월 중순~5월",s:"진행",p:"일본 최대급 조명 정원 (미에현 구와나)"}]},
+ {id:"kanazawa",grp:"주부",ko:"가나자와",jp:"金沢",ro:"Kanazawa",temp:"6–14℃",air:"고마쓰 KMQ",line:"#e08a1e",tag:"대게 해금 직후, 미식의 계절",
+  foods:[
+   {d:"카이센동",djp:"海鮮丼",s:"오미초 시장 이키이키테이",sjp:"近江町市場",a:"오미초 시장",n:"'가나자와의 부엌'. 11월부터 대게와 노도구로가 제철입니다.",c:["#b8432c","#f0a37a"]},
+   {d:"가나자와 카레",djp:"金沢カレー",s:"챔피언 카레",sjp:"チャンピオンカレー",a:"시내 각지",n:"걸쭉한 루에 돈카츠와 양배추를 올린 가나자와 카레의 원조입니다.",c:["#3a2614","#8a5a2a"]},
+   {d:"금박 소프트",djp:"金箔ソフト",s:"하쿠이치 히가시야마점",sjp:"箔一",a:"히가시차야가이",n:"금박 한 장을 통째로 덮은 아이스크림입니다.",c:["#b8902a","#f2d77a"]}],
+  sights:[["겐로쿠엔","일본 3대 정원, 유키츠리"],["히가시차야가이","찻집이 늘어선 옛 거리"],["가나자와성 공원","하얀 납 기와의 성"],["21세기 미술관","수영장 작품으로 유명"]],
+  ev:[{n:"겐로쿠엔 유키츠리",w:"11/1부터",s:"진행",p:"소나무 가지를 받치는 눈 대비 밧줄"},{n:"대게 제철",w:"11/6 해금",s:"제철",h:1,p:"카노가니·고바코가니"}]},
+ {id:"sapporo",grp:"홋카이도",ko:"삿포로 · 오타루",jp:"札幌",ro:"Sapporo",temp:"0–6℃",air:"CTS",line:"#3a8fc4",tag:"한발 먼저 오는 겨울과 첫눈",
+  foods:[
+   {d:"미소 라멘",djp:"味噌ラーメン",s:"스미레 삿포로 본점",sjp:"すみれ",a:"나카노시마",n:"라드로 덮인 진한 국물, 삿포로 미소 라멘의 대표입니다.",c:["#9a5a1a","#e2a54a"]},
+   {d:"징기스칸",djp:"ジンギスカン",s:"다루마 본점",sjp:"だるま",a:"스스키노",n:"1954년 창업. 투구 모양 철판에 굽는 양고기 노포입니다.",c:["#5a2a1a","#a8603a"]},
+   {d:"스프 카레",djp:"スープカレー",s:"GARAKU",sjp:"ガラク",a:"다누키코지",n:"삿포로 스프 카레 순위에 늘 오르는 집입니다.",c:["#a8461a","#f08a3a"]}],
+  sights:[["오도리 공원 · TV타워","화이트 일루미네이션 무대"],["모이와산","일본 신 3대 야경"],["삿포로 맥주 박물관","시음 포함"],["오타루 운하 · 오르골당","운하 산책과 르타오"],["니조 시장","해산물 덮밥"]],
+  ev:[{n:"삿포로 화이트 일루미네이션",w:"11월 하순 점등",s:"개막",h:1,p:"오도리 공원 일대"},{n:"뮌헨 크리스마스 마켓",w:"11월 하순 개막",s:"개막",p:"2026년 개막일 확인"}]},
+ {id:"hakodate",grp:"홋카이도",ko:"하코다테",jp:"函館",ro:"Hakodate",temp:"1–9℃",air:"삿포로에서 JR 3시간 30분",line:"#3a8fc4",tag:"세계 3대 야경의 항구 도시",
+  foods:[
+   {d:"카이센동",djp:"海鮮丼",s:"키쿠요 식당",sjp:"きくよ食堂",a:"하코다테 아침시장",n:"성게·연어알·가리비를 올린 도모에동의 원조입니다.",c:["#c4562a","#f2b07a"]},
+   {d:"시오 라멘",djp:"塩ラーメン",s:"아지사이 본점",sjp:"函館麺厨房あじさい",a:"고료카쿠",n:"맑은 소금 국물의 하코다테식 라멘 대표점입니다.",c:["#b8a26a","#efe2b8"]},
+   {d:"로컬 버거",djp:"ハンバーガー",s:"럭키 피에로",sjp:"ラッキーピエロ",a:"베이에어리어",n:"하코다테에만 있는 버거 체인. 차이니즈 치킨버거가 간판입니다.",c:["#b83a2a","#f2c04a"]}],
+  sights:[["하코다테산 야경","세계 3대 야경"],["고료카쿠","별 모양 성곽과 타워"],["가네모리 붉은 벽돌 창고","항구 쇼핑가"],["모토마치","언덕 위 성당 거리"]],
+  ev:[{n:"하코다테 크리스마스 판타지",w:"11월 말~12월",s:"확인",p:"붉은 벽돌 창고 앞 대형 트리"}]},
+ {id:"sendai",grp:"도호쿠",ko:"센다이",jp:"仙台",ro:"Sendai",temp:"4–13℃",air:"SDJ",line:"#2f8a4a",tag:"규탄의 고향, 마츠시마 일본 3경",
+  foods:[
+   {d:"규탄",djp:"牛たん",s:"아지 타스케",sjp:"味太助",a:"고쿠분초",n:"1948년 창업, 센다이 소혀 구이의 원조입니다.",c:["#6a3a2a","#b8765a"]},
+   {d:"즌다",djp:"ずんだ",s:"즌다사료",sjp:"ずんだ茶寮",a:"센다이역",n:"풋콩 페이스트로 만든 떡과 셰이크가 명물입니다.",c:["#5a8a2a","#b8d67a"]},
+   {d:"사사카마보코",djp:"笹かまぼこ",s:"아베 카마보코 본점",sjp:"阿部蒲鉾店",a:"중앙거리",n:"대나무잎 모양 어묵. 갓 튀긴 히요코가 인기입니다.",c:["#a89a7a","#efe6cc"]}],
+  sights:[["즈이호덴","다테 마사무네 영묘"],["센다이성터","아오바산 전망"],["마츠시마","일본 3경, 섬 유람선"],["아키우 온천","센다이 근교 온천"]],
+  ev:[{n:"마츠시마 엔츠인 단풍 라이트업",w:"11월 초~하순",s:"막바지",p:"빛의 페전트는 12월 개최"}]},
+ {id:"hiroshima",grp:"주고쿠·시코쿠",ko:"히로시마 · 미야지마",jp:"広島",ro:"Hiroshima",temp:"7–16℃",air:"HIJ",line:"#7a4fb0",tag:"바다 위 도리이와 단풍 계곡",
+  foods:[
+   {d:"히로시마풍 오코노미야키",djp:"お好み焼き",s:"나가타야",sjp:"長田屋",a:"평화기념공원 앞",n:"면을 넣고 겹겹이 굽는 히로시마식. 늘 대기줄이 있습니다.",c:["#7a3a1a","#c9864a"]},
+   {d:"굴 요리",djp:"牡蠣",s:"카키야",sjp:"牡蠣屋",a:"미야지마 오모테산도",n:"11월부터 제철. 굴 구이·튀김·굴밥 정식입니다.",c:["#7a8a8a","#cfdad6"]},
+   {d:"아나고메시",djp:"あなごめし",s:"우에노",sjp:"うえの",a:"미야지마구치",n:"1901년 창업, 붕장어 덮밥의 원조입니다.",c:["#5a3414","#a8703a"]}],
+  sights:[["이츠쿠시마 신사","바다 위 도리이, 세계유산"],["미센산 로프웨이","세토 내해 조망"],["원폭 돔 · 평화기념공원","세계유산"],["모미지다니 공원","단풍 계곡"]],
+  ev:[{n:"미야지마 단풍",w:"11월 중하순",s:"절정",h:1,p:"모미지 만쥬의 본고장"},{n:"히로시마 드리미네이션",w:"11월 중순~1월 초",s:"진행",p:"평화대로 일대"}]},
+ {id:"takamatsu",grp:"주고쿠·시코쿠",ko:"다카마쓰 · 가가와",jp:"高松",ro:"Takamatsu",temp:"8–17℃",air:"TAK",line:"#7a4fb0",tag:"우동 순례와 예술의 섬",
+  foods:[
+   {d:"사누키 우동",djp:"讃岐うどん",s:"야마고에 우동",sjp:"山越うどん",a:"아야가와",n:"날달걀에 비벼 먹는 가마타마 우동의 원조입니다.",c:["#c9b47a","#f5ecc9"]},
+   {d:"호네츠키도리",djp:"骨付鳥",s:"잇카쿠 마루가메 본점",sjp:"一鶴",a:"마루가메",n:"뼈째 구운 닭다리의 원조. 노계 오야도리를 추천합니다.",c:["#8a4a1a","#d48a3a"]},
+   {d:"셀프 우동",djp:"セルフうどん",s:"가모 우동",sjp:"がもう",a:"사카이데",n:"논 옆 작은 가게에서 먹는 정통 셀프 우동입니다.",c:["#b8a26a","#efe2b8"]}],
+  sights:[["리츠린 공원","미쉐린 그린가이드 3스타 정원"],["나오시마","지중미술관과 호박 조형물"],["고토히라궁","785계단의 곤피라상"],["쇼도시마 간카케이","단풍 협곡 로프웨이"]],
+  ev:[{n:"리츠린 공원 가을 라이트업",w:"11월 하순~12월 초",s:"확인",h:1,p:"2026년 일정 확인"}]},
+ {id:"fukuoka",grp:"규슈",ko:"후쿠오카",jp:"福岡",ro:"Fukuoka",temp:"10–17℃",air:"FUK · 도심 5분",line:"#c43a5a",tag:"가장 가깝고, 스모 마지막 3일이 겹치는 곳",
+  foods:[
+   {d:"돈코츠 라멘",djp:"豚骨ラーメン",s:"이치란 본사 총본점",sjp:"一蘭",a:"나카스",n:"돈코츠 라멘을 세계에 알린 주역. 1인 칸막이 좌석입니다.",c:["#c9a87a","#f2e2c4"]},
+   {d:"모츠나베",djp:"もつ鍋",s:"모츠나베 오오야마",sjp:"おおやま",a:"하카타 · 텐진",n:"하카타 곱창 전골 대표 가게. 된장 맛을 추천합니다.",c:["#8a3a1a","#d47a4a"]},
+   {d:"멘타이코",djp:"明太子",s:"간소 하카타 멘타이쥬",sjp:"元祖博多めんたい重",a:"나카스",n:"명란 덮밥 멘타이쥬의 원조. 오픈런이 필요합니다.",c:["#c43a3a","#f28a7a"]}],
+  sights:[["다자이후 텐만구","학문의 신, 단풍 명소"],["나카스 야타이","강변 포장마차 거리"],["오호리 공원","호수 공원과 일본 정원"],["후쿠오카 타워 · 모모치 해변","바다 전망"],["유후인 · 벳푸","근교 온천"]],
+  ev:[{n:"오즈모 규슈 바쇼 (스모)",w:"11/8~11/22 예상",s:"마지막 3일",h:1,p:"후쿠오카 국제센터, 우승이 결정되는 주간"},{n:"하카타역 크리스마스 마켓",w:"11월 중순 개막",s:"진행",p:"역 앞 광장"}]},
+ {id:"nagasaki",grp:"규슈",ko:"나가사키",jp:"長崎",ro:"Nagasaki",temp:"10–17℃",air:"후쿠오카에서 신칸센 1시간 30분",line:"#c43a5a",tag:"짬뽕과 카스텔라의 발상지",
+  foods:[
+   {d:"나가사키 짬뽕",djp:"ちゃんぽん",s:"시카이로",sjp:"四海樓",a:"오우라",n:"1899년 창업, 나가사키 짬뽕이 처음 만들어진 곳입니다.",c:["#c9b48a","#f5ecd6"]},
+   {d:"카스텔라",djp:"カステラ",s:"후쿠사야 본점",sjp:"福砂屋",a:"후나다이쿠마치",n:"1624년 창업한 카스텔라 노포입니다.",c:["#c48a1a","#f2d07a"]},
+   {d:"토루코 라이스",djp:"トルコライス",s:"츠루짱",sjp:"ツル茶ん",a:"하마노마치",n:"1925년 창업. 토루코 라이스와 밀크셰이크의 원조입니다.",c:["#8a5a2a","#d49a5a"]}],
+  sights:[["이나사야마 야경","세계 신 3대 야경"],["글로버 정원","항구가 내려다보이는 서양관"],["오우라 천주당","세계유산"],["군함도 투어","하시마 섬 상륙"],["하우스텐보스","유럽풍 테마파크"]],
+  ev:[{n:"하우스텐보스 빛의 왕국",w:"11월 중순~",s:"진행",p:"크리스마스 시즌 조명"}]},
+ {id:"kagoshima",grp:"규슈",ko:"가고시마",jp:"鹿児島",ro:"Kagoshima",temp:"11–19℃",air:"KOJ",line:"#c43a5a",tag:"활화산을 마주한 흑돼지의 도시",
+  foods:[
+   {d:"흑돼지 돈카츠",djp:"黒豚とんかつ",s:"쿠로카츠테이",sjp:"黒かつ亭",a:"가고시마 중앙역",n:"가고시마산 흑돼지 돈카츠 대표 가게입니다.",c:["#7a4a1a","#c98a3a"]},
+   {d:"시로쿠마 빙수",djp:"白熊",s:"텐몬칸 무자키",sjp:"天文館むじゃき",a:"텐몬칸",n:"연유와 과일을 올린 곰 얼굴 빙수의 원조입니다.",c:["#c9b8a8","#f8f2ec"]},
+   {d:"가고시마 라멘",djp:"鹿児島ラーメン",s:"라멘 톤토로",sjp:"豚とろ",a:"텐몬칸",n:"돈코츠 베이스의 가고시마 라멘 대표점입니다.",c:["#a8865a","#ead6b2"]}],
+  sights:[["사쿠라지마","페리 15분 거리의 활화산"],["센간엔","화산을 정원 경치로 쓴 이소 정원"],["시로야마 전망대","시내와 화산 조망"],["이부스키","모래찜질 온천"]],
+  ev:[{n:"센간엔 단풍 라이트업",w:"11월 중하순",s:"확인",p:"2026년 일정 확인"}]},
+ {id:"okinawa",grp:"오키나와",ko:"오키나와",jp:"沖縄",ro:"Okinawa",temp:"19–24℃",air:"OKA",line:"#1aa0a0",tag:"11월에도 반팔, 남국의 늦가을",
+  foods:[
+   {d:"오키나와 소바",djp:"沖縄そば",s:"키시모토 식당",sjp:"きしもと食堂",a:"모토부",n:"1905년 창업, 장작불로 우린 육수의 전설적인 소바집입니다.",c:["#b8965a","#efdcb2"]},
+   {d:"타코라이스",djp:"タコライス",s:"킹 타코스 킨 본점",sjp:"キングタコス",a:"킨초",n:"밥 위에 타코 재료를 올린 타코라이스의 발상지입니다.",c:["#b8562a","#f2b04a"]},
+   {d:"향토 요리",djp:"ゴーヤーチャンプルー",s:"유난기",sjp:"ゆうなんぎい",a:"나하 국제거리 인근",n:"고야 찬푸르와 라후테를 내는 오키나와 가정식 노포입니다.",c:["#3a7a3a","#9ac27a"]}],
+  sights:[["추라우미 수족관","고래상어 대형 수조"],["국제거리 · 마키시 시장","나하 중심가"],["슈리성","정전 복원 2026년 가을 완공 목표, 공개 여부 확인"],["고우리 대교","에메랄드빛 바다 위 다리"],["만좌모","코끼리 코 모양 절벽"]],
+  ev:[{n:"동남식물낙원 일루미네이션",w:"11월 중순~",s:"진행",p:"오키나와 최대급 조명"},{n:"해양 액티비티",w:"연중",s:"가능",p:"스노클링은 웻슈트 권장"}]}
+];
+
+
+/* extra eats per region: [tag, shop, shopJp, dish, dishJp(thumb), area, year, note]
+   tags: 노포 · 포장마차 · 골목 · 시장 · 라멘 · 디저트 · 명물 */
+const EX = {
+ tokyo:[["노포","간다 야부소바","かんだやぶそば","소바","蕎麦","간다","1880","녹색 빛 메밀면과 노래하듯 주문을 외치는 소바 노포"],
+  ["노포","다이코쿠야 텐푸라","大黒家天麩羅","텐동","天丼","아사쿠사","1887","참기름에 튀겨 진한 소스를 끼얹은 에도식 텐동"],
+  ["노포","이세겐","いせ源","아귀 전골","あんこう鍋","간다","1830","도쿄에 하나뿐인 아귀 요리 전문점, 겨울 한정 메뉴 개시"],
+  ["골목","오모이데 요코초","思い出横丁","야키토리","焼き鳥","신주쿠","","전후 암시장에서 시작된 좁은 골목에 야키토리집 60여 곳"],
+  ["골목","논베이 요코초","のんべい横丁","작은 바·이자카야","呑兵衛","시부야","","예닐곱 명이 앉는 작은 가게가 이어진 시부야 술골목"],
+  ["골목","유라쿠초 가드시타","有楽町ガード下","이자카야","ガード下","유라쿠초","","철로 고가 아래 퇴근길 직장인들의 대중 술집"],
+  ["골목","츠키시마 몬자 스트리트","月島もんじゃストリート","몬자야키","もんじゃ","츠키시마","","몬자야키 가게 70여 곳이 모인 거리"],
+  ["라멘","AFURI","AFURI","유자 시오 라멘","柚子塩","에비스","","유자 향 맑은 소금 라멘"]],
+ hakone:[["노포","후지야 호텔 '더 후지야'","富士屋ホテル","비프 카레","カレー","미야노시타","1878","일본 최초 리조트 호텔의 클래식 카레"],
+  ["노포","아마자케 차야","甘酒茶屋","아마자케·치카라모치","甘酒","구 하코네 가도","에도 시대","옛길 위 초가 찻집, 단술과 떡"]],
+ fuji:[["명물","고슈 호토 코사쿠","小作","호토","ほうとう","가와구치코","","호박 호토가 대표 메뉴인 호토 전문점"],
+  ["포장마차","오시노 핫카이 노점","忍野八海","쿠사모치·구이떡","草餅","오시노","","샘물 마을 노점의 쑥떡과 구운 옥수수"]],
+ osaka:[["노포","지유켄","自由軒","명물 카레","カレー","난바","1910","밥과 카레를 미리 비벼 날달걀을 올린 명물 카레"],
+  ["노포","메오토젠자이","夫婦善哉","단팥죽","ぜんざい","호젠지요코초","1883","한 사람 몫을 두 그릇에 나눠 주는 단팥죽"],
+  ["노포","요시노스시","吉野寿司","하코즈시","箱寿司","요도야바시","1841","오사카식 상자 누름초밥의 원조"],
+  ["명물","도톤보리 이마이","道頓堀今井","키츠네 우동","きつね","도톤보리","1946","다시마 육수와 달달한 유부의 키츠네 우동"],
+  ["골목","우라난바","裏なんば","이자카야","裏なんば","난바","","난바 뒷골목 작은 술집 수백 곳"],
+  ["골목","잔잔요코초","ジャンジャン横丁","쿠시카츠·도테야키","串カツ","신세카이","","쿠시카츠와 장기 기원이 이어진 옛 골목"],
+  ["골목","텐마","天満","대중 술집","天満","텐마","","일본에서 가장 긴 상점가 옆 저렴한 술집 거리"],
+  ["명물","551 호라이","551蓬莱","부타만","豚まん","난바 본점","","오사카 사람들의 손에 들린 빨간 봉투 찐빵"],
+  ["디저트","리쿠로 오지상","りくろーおじさんの店","치즈케이크","チーズケーキ","난바","","굽자마자 종을 울리는 폭신한 치즈케이크"]],
+ kyoto:[["노포","혼케 오와리야","本家尾張屋","호라이 소바","蕎麦","가라스마","1465","550년 넘은 소바집, 5단 찬합 호라이 소바"],
+  ["노포","이치와","一文字屋和輔","아부리모치","あぶり餅","이마미야 신사","1000","천 년 넘게 이어진 일본 최고(最古)급 떡집"],
+  ["노포","소혼케 니신소바 마츠바","松葉","니신소바","にしん","기온 미나미자","1861","달게 졸인 청어를 올린 니신소바 발상지"],
+  ["노포","효테이","瓢亭","반숙 달걀·아침죽","瓢亭玉子","난젠지","에도 초기","미쉐린 3스타 요정의 명물 반숙 달걀"],
+  ["골목","폰토초","先斗町","교요리·이자카야","先斗町","가모가와 변","","좁은 돌길에 등불이 걸린 교토 대표 술골목"],
+  ["시장","니시키 시장","錦市場","길거리 음식","錦市場","시조","","교토의 부엌, 두부 도넛·다시마키·꼬치"],
+  ["라멘","혼케 다이이치아사히","本家第一旭","교토 라멘","ラーメン","교토역","","간장 돼지뼈 국물, 아침부터 줄 서는 집"]],
+ nara:[["노포","기쿠야","菊屋","우구이스모치","鶯餅","야마토코리야마","1585","도요토미 히데요시에게 바쳤다는 화과자 노포"],
+  ["골목","나라마치","ならまち","카페·이자카야","ならまち","나라마치","","에도 시대 상가 건물이 남은 골목 카페 거리"],
+  ["디저트","마호로바 대불 푸딩","まほろば大仏プリン","푸딩","プリン","나라역","","대불 그림 병에 담긴 나라 명물 푸딩"]],
+ kobe:[["포장마차","난킨마치 노점","南京町","길거리 중화요리","南京町","모토마치","","차이나타운 노점의 소룡포·베이징덕 랩"],
+  ["명물","아카시야키 키무라야","きむらや","아카시야키","明石焼","아카시","","다시에 찍어 먹는 달걀 타코야키"],
+  ["디저트","고베 프린","神戸プリン","푸딩","プリン","산노미야","","고베 기념품 1순위 푸딩"]],
+ nagoya:[["노포","야마모토야 소혼케","山本屋総本家","미소니코미 우동","味噌煮込","사카에","1907","된장 국물에 끓인 꼬들한 우동"],
+  ["노포","미야 기시멘","宮きしめん","기시멘","きしめん","아츠타 신궁 안","1923","넓적한 면의 나고야 우동"],
+  ["명물","미센","味仙","대만 라멘","台湾ラーメン","이마이케","","나고야에서 탄생한 매운 대만 라멘의 원조"],
+  ["명물","텐무스 센주","千寿","텐무스","天むす","오스","","새우튀김 주먹밥 텐무스의 원조"],
+  ["명물","코메다 커피","コメダ珈琲店","모닝 세트","モーニング","시내 각지","","커피 한 잔에 토스트가 따라오는 나고야 모닝"]],
+ kanazawa:[["노포","오토모로","大友楼","가가 요리·지부니","治部煮","가나자와역 인근","1830","가가번 요리를 이어 온 요정"],
+  ["노포","아카다마","赤玉","가나자와 오뎅","おでん","가타마치","1927","게 껍질째 끓이는 카니멘 오뎅"],
+  ["골목","가타마치·기야마치","片町","이자카야","片町","가타마치","","호쿠리쿠 최대 번화가의 오뎅·해산물 술집"]],
+ sapporo:[["노포","아지노산페이","味の三平","미소 라멘","味噌","다누키코지","1950","미소 라멘을 처음 만든 집"],
+  ["노포","마사즈시","政寿司","스시","寿司","오타루 스시 거리","1938","오타루 스시 거리의 대표 노포"],
+  ["골목","원조 라멘 요코초","元祖さっぽろラーメン横丁","라멘","ラーメン横丁","스스키노","","라멘집 17곳이 모인 원조 골목"],
+  ["시장","니조 시장","二条市場","카이센동","海鮮丼","오도리","","게·성게·연어알 덮밥 아침 식사"],
+  ["명물","삿포로 맥주원","サッポロビール園","징기스칸·생맥주","ジンギスカン","히가시구","","붉은 벽돌 공장 건물의 무제한 징기스칸"],
+  ["디저트","시메 파르페","しめパフェ","시메 파르페","パフェ","스스키노","","술자리 마무리로 먹는 삿포로식 밤 파르페"]],
+ hakodate:[["골목","다이몬 요코초","大門横丁","포장마차촌","屋台村","하코다테역 앞","","작은 가게 20여 곳이 모인 포장마차 골목"],
+  ["노포","고토켄","五島軒","양식·카레","カレー","모토마치","1879","메이지 시대부터 이어진 서양 요리점"],
+  ["명물","하세가와 스토어","ハセガワストア","야키토리 벤토","やきとり弁当","베이에어리어","","돼지고기 꼬치를 올린 하코다테 명물 도시락"]],
+ sendai:[["골목","이로하 요코초","壱弐参横丁","이자카야·카페","横丁","아오바도리","","전후 시장에서 이어진 100여 곳의 골목"],
+  ["골목","분카 요코초","文化横丁","대중 술집","文化横丁","이치반초","","다이쇼 시대부터 이어진 센다이 술골목"],
+  ["명물","규탄 리큐","利久","규탄 정식","牛たん","센다이역","","보리밥·테일 수프와 함께 나오는 규탄 정식"]],
+ hiroshima:[["골목","오코노미무라","お好み村","오코노미야키","お好み焼","신텐치","","오코노미야키 가게 20여 곳이 모인 빌딩"],
+  ["노포","후지이야","藤い屋","모미지 만쥬","もみじ饅頭","미야지마","1925","단풍잎 모양 만쥬 노포"],
+  ["명물","모미지도","紅葉堂","아게모미지","揚げもみじ","미야지마","","튀김옷을 입혀 튀긴 모미지 만쥬"],
+  ["명물","바쿠단야","ばくだん屋","히로시마 츠케멘","つけ麺","나가레카와","","고추기름 소스에 찍어 먹는 매운 츠케멘"],
+  ["명물","킹켄","キング軒","시루나시 탄탄멘","汁なし担担麺","나카마치","","국물 없는 산초 탄탄멘"]],
+ takamatsu:[["노포","우동 혼진 야마다야","うどん本陣 山田家","자루 우동","ざるうどん","무레","","옛 호농 저택에서 먹는 우동"],
+  ["명물","우동보","うどん棒","가케 우동","かけうどん","다카마쓰","","시내에서 가기 쉬운 사누키 우동집"]],
+ fukuoka:[["포장마차","나카스 야타이 거리","中洲屋台","라멘·오뎅·꼬치","屋台","나카스 강변","","강변을 따라 저녁마다 서는 포장마차 거리"],
+  ["포장마차","텐진 야타이","天神屋台","야키라멘·교자","屋台","텐진","","직장인이 많은 텐진 거리의 포장마차"],
+  ["포장마차","코킨짱","小金ちゃん","야키라멘","焼きラーメン","텐진","","야키라멘을 처음 만든 포장마차"],
+  ["노포","간소 나가하마야","元祖長浜屋","나가하마 라멘","長浜","나가하마","1952","메뉴가 라멘 하나뿐인 나가하마 라멘의 원조"],
+  ["노포","미즈타키 나가노","水炊き長野","미즈타키","水炊き","하카타","1930","뽀얀 닭 육수 전골 미즈타키 노포"],
+  ["노포","간소 모토요시야","元祖本吉屋","장어 세이로무시","せいろ蒸し","야나가와","1681","300년 넘은 찐 장어덮밥"],
+  ["명물","하카타 테츠나베","鉄なべ","철판 교자","鉄鍋餃子","나카스","","한입 크기 교자를 철냄비째 내는 집"],
+  ["명물","마키노 우동","牧のうどん","부드러운 우동","うどん","시내 각지","","국물을 빨아들이는 부드러운 하카타 우동"]],
+ nagasaki:[["노포","쇼오켄","松翁軒","카스텔라","カステラ","시청 인근","1681","후쿠사야와 함께 꼽히는 카스텔라 노포"],
+  ["노포","요소","吉宗","차완무시","茶碗むし","하마노마치","1866","차완무시와 무시즈시 세트로 유명"],
+  ["포장마차","신치 차이나타운","新地中華街","카쿠니만쥬·사라우동","中華街","신치","","일본 3대 차이나타운의 길거리 음식"],
+  ["명물","빅맨","ビッグマン","사세보 버거","佐世保バーガー","사세보","","미군 기지 문화에서 태어난 수제 버거"]],
+ kagoshima:[["명물","구마소테이","熊襲亭","사츠마 향토 요리","きびなご","텐몬칸","","키비나고 회와 흑돼지 샤브샤브"],
+  ["노포","히라타 잼보모치","平田屋","잼보모치","じゃんぼ餅","센간엔 앞","","꼬치 두 개를 꽂은 달콤한 떡"],
+  ["명물","사츠마아게","さつま揚げ","사츠마아게","さつま揚","텐몬칸","","갓 튀긴 어묵을 사 먹는 가고시마 길거리 음식"]],
+ okinawa:[["시장","제1 마키시 공설시장","第一牧志公設市場","해산물 즉석 요리","市場","국제거리","","1층에서 생선을 고르면 2층 식당에서 요리"],
+  ["골목","사카에마치 시장","栄町市場","이자카야","栄町","아사토","","낮엔 시장, 밤엔 작은 술집이 되는 골목"],
+  ["노포","센니치","千日","오키나와 젠자이","ぜんざい","나하","1961","단팥 대신 강낭콩을 올린 오키나와식 빙수"],
+  ["노포","잭스 스테이크 하우스","ジャッキーステーキハウス","스테이크","ステーキ","나하","1953","미군 통치 시절부터 이어진 스테이크집"],
+  ["명물","A&W","A&W","루트비어·버거","ルートビア","마키미나토","1963","일본 1호 패스트푸드 체인"]]
+};
+const TAGCLS = {"노포":"t-old","포장마차":"t-yatai","골목":"t-alley","시장":"t-market"};
+const TONES = [["#7a3a1a","#c9864a"],["#5a2e14","#b8763a"],["#8a5a2a","#d49a5a"],["#6a3a2a","#b8765a"],["#7a6a2a","#c9b45c"],["#3a5a6a","#8ab0c4"],["#8a3a2a","#d47a5a"],["#4f6b2a","#9bb35a"]];
+const tone = s => TONES[[...s].reduce((a,c)=>a+c.charCodeAt(0),0)%TONES.length];
+
+const FL = [
+ ["도쿄 NRT · HND","2시간 20분","07:30–10:30","13:00–17:00","대한항공, 아시아나, 제주항공, 진에어, 티웨이, 피치, ZIPAIR / 김포↔하네다 JAL·ANA"],
+ ["오사카 KIX","1시간 40분","07:00–10:30","12:30–17:00","대한항공, 아시아나, 제주항공, 진에어, 티웨이, 에어부산, 피치"],
+ ["후쿠오카 FUK","1시간 20분","07:00–10:00","12:00–17:00","대한항공, 아시아나, 제주항공, 진에어, 티웨이, 에어부산"],
+ ["삿포로 CTS","3시간","08:00–10:30","12:30–16:00","대한항공, 아시아나, 제주항공, 진에어, 티웨이"],
+ ["나고야 NGO","1시간 50분","08:00–10:00","12:00–16:00","대한항공, 제주항공, 진에어"],
+ ["오키나와 OKA","2시간 20분","07:30–10:30","12:00–16:00","대한항공, 아시아나, 제주항공, 진에어, 티웨이"],
+ ["히로시마 · 다카마쓰 · 가고시마 · 고마쓰 · 센다이","1시간 30분–2시간","노선별 오전편 위주","노선별 상이","주 3~7회 운항 노선, 운항 여부 사전 확인"]
+];
+
+const PL = {
+ "간사이 단풍 ★":[["오전 인천 출발, 간사이 도착","난바 체크인 → 도톤보리 (와나카 타코야키, 미즈노 오코노미야키) → 미도스지 일루미네이션"],["교토","후시미 이나리(이른 아침) → 도후쿠지 → 기요미즈데라 → 기온 이즈우 사바즈시 → 기요미즈데라 야간 관람"],["교토","아라시야마 대나무숲 → 난젠지 오쿠탄 유도후 → 철학의 길 → 에이칸도 야간 라이트업"],["나라","도다이지, 사슴 공원 (나카타니도 쑥떡, 시즈카 카마메시) → 오사카 신세카이 다루마 쿠시카츠"],["오후 귀국","구로몬 시장 또는 오사카성 → 간사이 공항"]],
+ "도쿄 · 하코네":[["오전 출발, 도쿄 도착","아사쿠사 센소지 → 스카이트리 야경"],["도쿄","도요스 스시다이 → 진구가이엔 은행나무 축제 → 마이센 돈카츠 → 시부야 스카이"],["하코네","오와쿠다니 쿠로타마고 → 아시노코 해적선 → 료칸 온천 1박"],["가와구치코","모미지 회랑과 후지산 (호토 후도) → 도쿄 복귀, 롯폰기 일루미네이션"],["오후 귀국","도쿄역 로쿠린샤 츠케멘, 기념품 쇼핑 → 공항"]],
+ "후쿠오카 미식 · 스모":[["오전 출발, 후쿠오카 도착","규슈 바쇼 스모 관람 → 나카스 야타이"],["후쿠오카","다자이후 텐만구 단풍 → 멘타이쥬 → 모츠나베 오오야마"],["근교","유후인 또는 나가사키 (시카이로 짬뽕, 이나사야마 야경)"],["후쿠오카","오호리 공원 → 후쿠오카 타워 → 텐진 쇼핑, 이치란 총본점"],["오후 귀국","하카타역 크리스마스 마켓 → 지하철 5분 만에 공항"]],
+ "홋카이도 겨울":[["오전 출발, 삿포로 도착","오도리 공원 화이트 일루미네이션 → 다루마 징기스칸"],["오타루","운하와 오르골당, 마사즈시, 르타오"],["삿포로","니조 시장 → 맥주 박물관 → 모이와산 야경 → 스미레 미소 라멘"],["조잔케이","온천 당일치기 또는 1박 → GARAKU 스프 카레"],["오후 귀국","신치토세 공항 쇼핑 (로이스, 시로이코이비토)"]]
+};
+const DAYS=[["11/20","FRI"],["11/21","SAT"],["11/22","SUN"],["11/23","MON"],["11/24","TUE"]];
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function photo(f, i, r){
+  const q = f.sjp + " " + f.djp;
+  return `<a class="photo" href="${G(q)}" target="_blank" rel="noopener" style="background:linear-gradient(140deg,${f.c[0]},${f.c[1]})" aria-label="${esc(f.s)} ${esc(f.d)} 실사 사진 보기 (구글 이미지)">
+    ${PHOTOS[`${r.id}-${i+1}`]?`<img src="img/${r.id}-${i+1}.jpg" alt="${esc(f.d)} · ${esc(f.s)}" loading="lazy">`:""}
+    <span class="rank">No.${i+1}</span>
+    <span class="ph">${esc(f.djp)}</span>
+    <span class="g">실사 사진 보기 ↗</span></a>`;
+}
+
+
+function thumb(x, key){
+  const [tag,shop,sjp,dish,djp] = x, c = tone(sjp);
+  return `<a class="thumb" href="${G(sjp+" "+dish.split("·")[0])}" target="_blank" rel="noopener" style="background:linear-gradient(140deg,${c[0]},${c[1]})" aria-label="${esc(shop)} ${esc(dish)} 실사 사진 보기">
+    ${PHOTOS[key]?`<img src="img/${key}.jpg" alt="${esc(dish)}" loading="lazy">`:""}<span class="ph" style="font-size:${djp.length>5?11:djp.length>3?13:15}px">${esc(djp)}</span></a>`;
+}
+function xItem(x, key, regionName){
+  const [tag,shop,sjp,dish,djp,area,yr,note] = x;
+  return `<div class="x">${thumb(x,key)}<div class="x-body">
+    ${regionName?`<span class="rg">${esc(regionName)}</span><br>`:""}
+    <h5><span class="tg ${TAGCLS[tag]||""}">${tag}</span>${esc(shop)}<span class="sjp">${esc(sjp)}</span>${yr?`<span class="yr">${/^\d+$/.test(yr)?"since "+yr:esc(yr)}</span>`:""}</h5>
+    <div class="meta">${esc(dish)} · <a href="${M(sjp+" "+area)}" target="_blank" rel="noopener">${esc(area)}</a></div>
+    <p>${esc(note)}</p></div></div>`;
+}
+
+function region(r){
+  return `<section class="region" id="${r.id}" data-grp="${r.grp}">
+   <div class="sign" style="--sign:${r.line}">
+     <div class="sign-top">
+       <div class="sign-name"><span class="kanji">${r.jp}</span><span class="ko">${r.ko}</span><span class="ro">${r.ro}</span>${r.best?'<span class="star">이 시기 1순위</span>':''}</div>
+       <div class="sign-meta">11월 하순 기온<b>${r.temp}</b></div>
+     </div>
+     <div class="sign-line"></div>
+     <div class="sign-bottom"><span class="tagline">${esc(r.tag)}</span><span>${r.grp} · ${esc(r.air)}</span></div>
+   </div>
+   <div class="foods">${r.foods.map((f,i)=>`<article class="food">${photo(f,i,r)}
+     <div class="food-body"><span class="dish">${esc(f.d)}</span><h3>${esc(f.s)}</h3><span class="shopjp">${esc(f.sjp)}</span>
+     <span class="area"><a href="${M(f.sjp+" "+r.jp)}" target="_blank" rel="noopener">📍 ${esc(f.a)}</a></span><p>${esc(f.n)}</p></div></article>`).join("")}</div>
+   ${EX[r.id]?`<div class="more"><div class="more-head"><h4>더 먹어볼 곳 · 노포 · 포장마차 · 골목</h4><span class="muted" style="font-size:12px">${EX[r.id].length}곳 · 사진을 누르면 실사 이미지</span></div>
+     <div class="xlist">${EX[r.id].map((x,i)=>xItem(x,`${r.id}-x${i+1}`)).join("")}</div></div>`:""}
+   <div class="grid2">
+     <div class="panel"><h4>꼭 가볼 곳 · 이름을 누르면 사진</h4><ul class="sights">${r.sights.map(([n,d])=>`<li><i class="pin" aria-hidden="true"></i><div><a href="${G(r.ko.split(" ")[0]+" "+n.split(" · ")[0])}" target="_blank" rel="noopener">${esc(n)}</a><br><span>${esc(d)}</span></div></li>`).join("")}</ul></div>
+     <div class="panel"><h4>여행 기간 축제 · 이벤트</h4><div class="events">${r.ev.map(e=>`<div class="ev${e.h?' hot':''}"><b>${esc(e.n)}<span class="st">${esc(e.s)}</span></b><span class="when">${esc(e.w)}</span><p>${esc(e.p)}</p></div>`).join("")}</div></div>
+   </div></section>`;
+}
+
+document.getElementById("regions").innerHTML = R.map(region).join("");
+document.getElementById("flightRows").innerHTML = FL.map(f=>`<tr><td><b>${f[0]}</b></td><td class="t">${f[1]}</td><td class="t">${f[2]}</td><td class="t">${f[3]}</td><td>${f[4]}</td></tr>`).join("");
+
+
+/* old shops / yatai collection */
+const COLL = [["노포",x=>x[0]==="노포"],["포장마차·골목·시장",x=>["포장마차","골목","시장"].includes(x[0])]];
+const ctabs = document.getElementById("collTabs"), coll = document.getElementById("coll");
+ctabs.innerHTML = COLL.map((c,i)=>`<button class="chip" role="tab" id="ctab-${i}" aria-pressed="${i===0}" data-i="${i}">${c[0]} <span class="muted">${R.reduce((n,r)=>n+(EX[r.id]||[]).filter(c[1]).length,0)}</span></button>`).join("");
+function showColl(i){
+  ctabs.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.i==i));
+  let items = [];
+  R.forEach(r=>(EX[r.id]||[]).forEach((x,k)=>{ if(COLL[i][1](x)) items.push([x,`${r.id}-x${k+1}`,r.ko]); }));
+  if(i===0) items.sort((a,b)=>(parseInt(a[0][6])||9999)-(parseInt(b[0][6])||9999));
+  coll.innerHTML = items.map(([x,k,n])=>xItem(x,k,n)).join("");
+}
+ctabs.addEventListener("click",e=>{const b=e.target.closest(".chip"); if(b) showColl(+b.dataset.i);});
+showColl(0);
+
+
+
+/* region filter */
+const groups = ["전체", ...new Set(R.map(r=>r.grp))];
+const chips = document.getElementById("chips");
+chips.innerHTML = groups.map((g,i)=>`<button class="chip" id="chip-${i}" aria-pressed="${i===0}" data-g="${g}">${g}${g==="전체"?` <span class="muted">${R.length}</span>`:""}</button>`).join("");
+function setGroup(g){
+  chips.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.g===g));
+  document.querySelectorAll(".region").forEach(s=>s.hidden = !(g==="전체" || s.dataset.grp===g));
+  try{localStorage.setItem("jp-grp",g)}catch(e){}
+}
+chips.addEventListener("click",e=>{const b=e.target.closest(".chip"); if(!b) return; setGroup(b.dataset.g); document.getElementById("regions").scrollIntoView({block:"start"});});
+try{const g=localStorage.getItem("jp-grp"); if(g && groups.includes(g)) setGroup(g);}catch(e){}
+
+/* itineraries */
+const tabs = document.getElementById("planTabs"), plan = document.getElementById("plan");
+const names = Object.keys(PL);
+tabs.innerHTML = names.map((n,i)=>`<button class="chip" role="tab" id="tab-${i}" aria-pressed="${i===0}" data-i="${i}">${n}</button>`).join("");
+function showPlan(i){
+  tabs.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.i==i));
+  plan.innerHTML = PL[names[i]].map((d,k)=>`<div class="day"><div class="d${k===3?' hol':''}"><b>${DAYS[k][0]}</b>${DAYS[k][1]}${k===3?' · 공휴일':''}</div><p><b>${esc(d[0])}</b><br><span class="muted">${esc(d[1])}</span></p></div>`).join("");
+}
+tabs.addEventListener("click",e=>{const b=e.target.closest(".chip"); if(b) showPlan(+b.dataset.i);});
+showPlan(0);
+</script>
+</body>
+</html>
